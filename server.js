@@ -111,6 +111,13 @@ app.use('/books', (req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
+const BOOK_ART_ASSETS = new Set(['cover.png', 'cosmos.jpg', 'earth.jpg', 'life.jpg', 'human-origins.jpg', 'brain.jpg', 'consciousness.jpg']);
+app.get('/images/book/:asset', (req, res, next) => {
+  if (!BOOK_ART_ASSETS.has(req.params.asset)) return next();
+  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  return res.sendFile(path.join(PUBLIC_DIR, 'images', 'book', req.params.asset));
+});
+
 app.use(express.static(PUBLIC_DIR, {
   index: 'index.html',
   setHeaders: (res, filePath) => {

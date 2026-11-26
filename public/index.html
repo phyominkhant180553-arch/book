@@ -102,6 +102,13 @@
     .visual-atlas-heading { display:flex; align-items:end; justify-content:space-between; gap:30px; margin-bottom:34px; }
     .visual-atlas-heading h2 { max-width:650px; margin:12px 0 0; font:400 clamp(2.3rem, 5vw, 5.2rem)/.98 var(--serif); letter-spacing:-.045em; }
     .visual-atlas-heading p { max-width:310px; margin:0; color:var(--muted); font-size:.82rem; line-height:1.8; }
+    .story-section { display:grid; grid-template-columns:minmax(220px,.72fr) minmax(300px,1.28fr); gap:clamp(34px,7vw,110px); align-items:start; padding:0 0 118px; }
+    .story-section h2 { margin:12px 0 0; font:400 clamp(2.4rem,5vw,5.4rem)/.98 var(--serif); letter-spacing:-.045em; }
+    .story-copy { color:#d6d0c7; font-size:.96rem; line-height:2; }
+    .story-copy p { margin:0 0 18px; }
+    .story-points { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:28px; }
+    .story-point { padding:17px 18px; border-top:1px solid rgba(199,137,98,.5); color:var(--muted); font-size:.75rem; line-height:1.7; }
+    .story-point strong { display:block; margin-bottom:5px; color:var(--paper); font-size:.82rem; font-weight:600; }
     .visual-grid { display:grid; grid-template-columns:1.25fr .75fr .9fr; grid-template-rows:220px 220px; gap:12px; }
     .visual-card { position:relative; overflow:hidden; min-height:180px; border:1px solid rgba(246,240,231,.14); background:#0a0b10; }
     .visual-card:first-child { grid-row:span 2; }
@@ -188,6 +195,8 @@
       .reader-footer { bottom:19px; }
       .scrubber { width:calc(100% - 70px); bottom:4px; }
       .gesture-hint { display:none; }
+      .story-section { grid-template-columns:1fr; gap:24px; padding-bottom:82px; }
+      .story-points { grid-template-columns:1fr; }
     }
 
     @media print {
@@ -243,6 +252,15 @@
             <figure class="visual-card"><img src="/images/book/life.jpg" alt="သက်ရှိနှင့် ကမ္ဘာမြေ" loading="lazy" /><figcaption>သက်ရှိ၏ မီးပွား</figcaption></figure>
             <figure class="visual-card"><img src="/images/book/human-origins.jpg" alt="လူသားတို့၏ မူလအစ" loading="lazy" /><figcaption>လူသားတို့၏ ခရီး</figcaption></figure>
             <figure class="visual-card"><img src="/images/book/brain.jpg" alt="ဦးနှောက်နှင့် အသိစိတ်" loading="lazy" /><figcaption>အတွင်းဘက် စကြဝဠာ</figcaption></figure>
+          </div>
+        </section>
+
+        <section id="about" class="story-section" aria-labelledby="story-title">
+          <div><div class="eyebrow">အကြောင်းအရာ</div><h2 id="story-title">ငါတို့ ဘယ်ကလာတာလဲ?<br><em>ဘယ်ကို ဆက်သွားနေကြတာလဲ?</em></h2></div>
+          <div class="story-copy">
+            <p>ဒီစာအုပ်ဟာ လွန်ခဲ့တဲ့ နှစ်ပေါင်း ၁၃.၈ ဘီလီယံက မဟာပေါက်ကွဲမှုနဲ့ စတင်ခဲ့တဲ့ ခရီးကို ပြန်လည်လိုက်လံကြည့်ရှုပါတယ်။ ကြယ်များ၊ ကမ္ဘာမြေ၊ သက်ရှိဘဝနဲ့ ဒိုင်နိုဆောများကို ကျော်ဖြတ်ပြီး လူသားဖြစ်လာတဲ့ အကြောင်းကို ရိုးရှင်းပြီး နက်နဲစွာ စူးစမ်းထားပါတယ်။</p>
+            <p>ခရီးရဲ့ နောက်ဆုံးပိုင်းမှာတော့ ဦးနှောက်၊ ခံစားချက်နဲ့ “ငါ” လို့ခေါ်တဲ့ ဇာတ်လမ်းကို ပြန်လည်ကြည့်ရှုပါတယ်။ ဦးနှောက်က မိမိကိုယ်တိုင်ကို နားလည်နိုင်ခြင်းဟာ စကြဝဠာရဲ့ အံ့ဩစရာအကောင်းဆုံး ဖြစ်ရပ်တစ်ခုဖြစ်ကြောင်း ဒီစာအုပ်က ဖော်ပြထားပါတယ်။</p>
+            <div class="story-points"><div class="story-point"><strong>စကြဝဠာ</strong>မဟာပေါက်ကွဲမှုမှ ကြယ်များနှင့် ကမ္ဘာမြေအထိ</div><div class="story-point"><strong>သက်ရှိ</strong>ပထမဆုံး အသက်မီးပွားမှ ဆင့်ကဲဖြစ်စဉ်အထိ</div><div class="story-point"><strong>လူသား</strong>လူသားတို့၏ မူလအစနှင့် သမိုင်းခရီး</div><div class="story-point"><strong>အသိစိတ်</strong>ဦးနှောက်၊ ခံစားချက်နှင့် “ငါ” ဇာတ်လမ်း</div></div>
           </div>
         </section>
 
