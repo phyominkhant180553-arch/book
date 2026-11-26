@@ -9,28 +9,23 @@ const HOST = '0.0.0.0';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 const BOOK_DIR = path.join(__dirname, 'books');
-const FULL_BOOK_PATH = path.join(BOOK_DIR, 'sample-book.pdf');
-const PREVIEW_BOOK_PATH = path.join(BOOK_DIR, 'sample-book-preview.pdf');
+const FULL_BOOK_PATH = path.join(BOOK_DIR, 'paing-book.pdf');
+const PREVIEW_BOOK_PATH = path.join(BOOK_DIR, 'paing-book-preview.pdf');
+const FULL_BOOK_PARTS = ['paing-book.pdf.part-01', 'paing-book.pdf.part-02', 'paing-book.pdf.part-03', 'paing-book.pdf.part-04'].map((name) => path.join(BOOK_DIR, name));
 const PUBLIC_DIR = path.join(__dirname, 'public');
-const FREE_PREVIEW_PAGES = 50;
-const TOTAL_BOOK_PAGES = 64;
+const FREE_PREVIEW_PAGES = 66;
+const TOTAL_BOOK_PAGES = 99;
 
 const book = {
-  title: process.env.BOOK_TITLE || 'The Shape of Quiet',
-  author: process.env.BOOK_AUTHOR || 'Aether Press · Sample Edition',
-  eyebrow: 'A short book about making room for what matters',
-  dek: 'A gentle, reflective sample publication for the Quiet Pages reading room.',
-  price: process.env.BOOK_PRICE || 'Complete edition · coming soon',
+  title: process.env.BOOK_TITLE || 'The Journey from the Cosmos to Consciousness',
+  author: process.env.BOOK_AUTHOR || 'Paing',
+  eyebrow: 'စကြဝဠာမှ အသိစိတ်အထိ စူးစမ်းရှာဖွေမှု',
+  dek: 'ဒီစာအုပ်ဟာ “ငါတို့ ဘယ်ကလာတာလဲ?” ဆိုတဲ့ မေးခွန်းနဲ့ စတင်ပြီး မဟာပေါက်ကွဲမှုကနေ သက်ရှိဘဝ၊ လူသားနဲ့ “ငါ” လို့ခေါ်တဲ့ အတ္တဇာတ်လမ်းအထိ ခရီးဆက်သွားစေပါတယ်။',
+  price: process.env.BOOK_PRICE || 'စာအုပ်အပြည့်အစုံ · မကြာမီ',
   purchaseUrl: process.env.BOOK_PURCHASE_URL || '#purchase',
   previewPages: FREE_PREVIEW_PAGES,
   totalPages: TOTAL_BOOK_PAGES,
-  chapters: [
-    { label: 'A door left open', page: 3, note: 'The beginning of attention' },
-    { label: 'The useful pause', page: 13, note: 'On doing less, more deliberately' },
-    { label: 'Small weather', page: 25, note: 'What a day can teach us' },
-    { label: 'A room of one’s own', page: 37, note: 'Boundaries as an invitation' },
-    { label: 'The shape of quiet', page: 47, note: 'A practice you can keep' }
-  ]
+  chapters: []
 };
 
 app.disable('x-powered-by');
@@ -53,7 +48,7 @@ function safeLog(level, event, details = {}) {
 function sendPdf(res, filePath, downloadName) {
   if (!fs.existsSync(filePath)) {
     safeLog('error', 'pdf_missing');
-    return res.status(404).json({ error: 'The sample book is not connected yet.' });
+    return res.status(404).json({ error: 'The book file is not connected yet.' });
   }
 
   const stat = fs.statSync(filePath);
@@ -63,6 +58,14 @@ function sendPdf(res, filePath, downloadName) {
   res.setHeader('Accept-Ranges', 'bytes');
   res.setHeader('Cache-Control', 'private, no-store');
   return fs.createReadStream(filePath).pipe(res);
+}
+
+function ensureFullBook() {
+  if (fs.existsSync(FULL_BOOK_PATH)) return true;
+  if (!FULL_BOOK_PARTS.every((part) => fs.existsSync(part))) return false;
+  fs.copyFileSync(FULL_BOOK_PARTS[0], FULL_BOOK_PATH);
+  for (const part of FULL_BOOK_PARTS.slice(1)) fs.appendFileSync(FULL_BOOK_PATH, fs.readFileSync(part));
+  return true;
 }
 
 function hasVerifiedEntitlement(req) {
@@ -75,7 +78,7 @@ app.get('/api/book-info', (req, res) => {
   safeLog('info', 'book_info_requested', { previewPages: book.previewPages });
   res.json({
     ...book,
-    source: 'local-demo-preview',
+    source: 'local-authentic-book',
     hasPreview: fs.existsSync(PREVIEW_BOOK_PATH),
     hasFullBook: false,
     fullBookRequiresEntitlement: true
@@ -129,15 +132,12 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
 });
 
-module.exports = app;
-
-if (require.main === module) {
-  app.listen(PORT, HOST, () => {
-    safeLog('info', 'server_started', {
-      port: PORT,
-      production: IS_PRODUCTION,
-      previewReady: fs.existsSync(PREVIEW_BOOK_PATH),
-      fullBookPresent: fs.existsSync(FULL_BOOK_PATH)
-    });
+app.listen(PORT, HOST, () => {
+  ensureFullBook();
+  safeLog('info', 'server_started', {
+    port: PORT,
+    production: IS_PRODUCTION,
+    previewReady: fs.existsSync(PREVIEW_BOOK_PATH),
+    fullBookPresent: fs.existsSync(FULL_BOOK_PATH)
   });
-}
+});

@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="my">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#171A21" />
-  <meta name="description" content="The Shape of Quiet — a calm digital reading room from Quiet Pages." />
+  <meta name="description" content="စကြဝဠာမှ အသိစိတ်အထိ — Paing ရေးသားသော စကြဝဠာနှင့် လူသားအသိစိတ်အကြောင်း စာအုပ်။" />
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="icon" href="/icons/bookmark.svg" type="image/svg+xml" />
-  <title>Quiet Pages — The Shape of Quiet</title>
+  <title>စကြဝဠာမှ အသိစိတ်အထိ — Paing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Noto+Serif+Myanmar:wght@400;500;600&display=swap" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
@@ -31,8 +31,8 @@
       --muted-dark: #706b65;
       --line: rgba(246,240,231,.16);
       --shadow: 0 28px 80px rgba(0,0,0,.34);
-      --serif: "DM Serif Display", Georgia, serif;
-      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: "Noto Serif Myanmar", "DM Serif Display", Georgia, serif;
+      --sans: "Noto Sans Myanmar", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     * { box-sizing: border-box; }
@@ -60,11 +60,12 @@
     .hero-art::before { content:""; position:absolute; width: 430px; height: 430px; border-radius:50%; background: radial-gradient(circle, rgba(199,137,98,.22), transparent 63%); filter: blur(10px); }
     .cover-wrap { position:relative; width:min(100%, 345px); transform: rotate(-4deg); filter: drop-shadow(28px 34px 28px rgba(0,0,0,.42)); transition: transform .7s cubic-bezier(.2,.8,.2,1); }
     .cover-wrap:hover { transform: rotate(-1deg) translateY(-8px); }
-    .cover { aspect-ratio: .69; position:relative; overflow:hidden; padding: 26px; border: 1px solid rgba(227,176,141,.6); background: linear-gradient(135deg, #30343f 0%, #1a1c24 54%, #11131a 100%); }
+    .cover { aspect-ratio: 1 / 1; position:relative; overflow:hidden; padding:0; border: 1px solid rgba(227,176,141,.6); background:#050507; }
+    .cover-image { display:block; width:100%; height:100%; object-fit:cover; }
+    .cover::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(120deg, rgba(255,255,255,.11), transparent 35%, rgba(0,0,0,.3)); mix-blend-mode:screen; }
     .cover::before { content:""; position:absolute; inset: 15px; border:1px solid rgba(199,137,98,.6); }
-    .cover::after { content:""; position:absolute; width: 160px; height: 160px; right: -28px; bottom: 45px; border-radius: 50%; border:1px solid rgba(199,137,98,.3); box-shadow: 0 0 0 22px rgba(199,137,98,.05), 0 0 0 44px rgba(199,137,98,.035); }
     .cover-top { position:relative; z-index:1; color:var(--copper-soft); font-size:.57rem; font-weight:700; letter-spacing:.18em; }
-    .cover-title { position:absolute; left: 26px; bottom: 90px; z-index:1; color:var(--paper); font-family:var(--serif); font-size: clamp(2.5rem, 5vw, 4rem); line-height:.9; }
+    .cover-title { display:none; position:absolute; left: 26px; bottom: 90px; z-index:1; color:var(--paper); font-family:var(--serif); font-size: clamp(2.5rem, 5vw, 4rem); line-height:.9; }
     .cover-title em { color:var(--copper-soft); font-style:italic; }
     .cover-bottom { position:absolute; left:26px; right:26px; bottom:28px; z-index:1; display:flex; justify-content:space-between; color:#cfc6bb; font-size:.55rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; }
     .cover-shadow-note { position:absolute; right: -48px; bottom: 42px; color:var(--copper); font-size:.65rem; letter-spacing:.16em; text-transform:uppercase; transform: rotate(90deg); transform-origin: left; }
@@ -97,6 +98,17 @@
     .motion-rail { position:relative; overflow:hidden; padding: 40px 0 54px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
     .motion-rail-track { display:flex; width:max-content; gap:clamp(34px, 6vw, 94px); color:rgba(246,240,231,.23); font:400 clamp(2.3rem, 6vw, 6.8rem)/.9 var(--serif); letter-spacing:-.05em; white-space:nowrap; }
     .motion-rail-track em { color:var(--copper-soft); font-style:italic; }
+    .visual-atlas { padding: 106px 0 120px; }
+    .visual-atlas-heading { display:flex; align-items:end; justify-content:space-between; gap:30px; margin-bottom:34px; }
+    .visual-atlas-heading h2 { max-width:650px; margin:12px 0 0; font:400 clamp(2.3rem, 5vw, 5.2rem)/.98 var(--serif); letter-spacing:-.045em; }
+    .visual-atlas-heading p { max-width:310px; margin:0; color:var(--muted); font-size:.82rem; line-height:1.8; }
+    .visual-grid { display:grid; grid-template-columns:1.25fr .75fr .9fr; grid-template-rows:220px 220px; gap:12px; }
+    .visual-card { position:relative; overflow:hidden; min-height:180px; border:1px solid rgba(246,240,231,.14); background:#0a0b10; }
+    .visual-card:first-child { grid-row:span 2; }
+    .visual-card:last-child { grid-column:2 / 4; }
+    .visual-card img { width:100%; height:100%; object-fit:cover; display:block; filter:saturate(.9) contrast(1.04); transition:transform .8s cubic-bezier(.2,.8,.2,1), filter .8s; }
+    .visual-card:hover img { transform:scale(1.07); filter:saturate(1.15) contrast(1.06); }
+    .visual-card figcaption { position:absolute; left:18px; right:18px; bottom:16px; color:#fff; font-size:.7rem; letter-spacing:.08em; text-shadow:0 2px 14px #000; }
     .hero-copy > *, .hero-art, .purchase-card { will-change:transform, opacity; }
 
     .reader { position:fixed; inset:0; z-index:30; overflow:hidden; min-height:100svh; background:var(--bg-gradient); transition:background 1.2s ease; }
@@ -182,12 +194,6 @@
       body::before { content:"Quiet Pages preview"; display:block; padding:40px; color:#171a21; font:20px Georgia,serif; }
       body * { visibility:hidden !important; }
     }
-  
-    /* Full-screen single-page reading */
-    .reader-nav, .reading-progress, .scrubber, .reader-footer, .gesture-hint { transition: opacity .6s ease; }
-    .reader.idle .reader-nav, .reader.idle .reading-progress, .reader.idle .scrubber, .reader.idle .reader-footer, .reader.idle .gesture-hint { opacity:0; pointer-events:none; }
-    .reader.idle .reader-nav > * { pointer-events:none; }
-    .book-wrapper { border-radius:2px 6px 6px 2px; }
   </style>
 </head>
 <body>
@@ -195,76 +201,85 @@
     <div class="container">
       <header class="site-nav">
         <a class="brand" href="#top" aria-label="Quiet Pages home"><span class="brand-mark">⌁</span><span>Quiet Pages</span></a>
-        <button class="ghost-button" type="button" data-open-reader>Open reader <span aria-hidden="true">↗</span></button>
+        <button class="ghost-button" type="button" data-open-reader>စာဖတ်ခန်းဖွင့်မည် <span aria-hidden="true">↗</span></button>
       </header>
 
       <main id="top">
         <section class="hero" aria-labelledby="hero-title">
-          <div class="hero-art" aria-label="The Shape of Quiet book cover preview">
+          <div class="hero-art" aria-label="စကြဝဠာမှ အသိစိတ်အထိ စာအုပ်အဖုံး အစမ်းကြည့်ရန်">
             <div class="cover-wrap">
               <div class="cover">
-                <div class="cover-top">AETHER PRESS · SAMPLE EDITION</div>
-                <div class="cover-title">The<br><em>Shape</em><br>of Quiet</div>
-                <div class="cover-bottom"><span>Quiet Pages</span><span>01</span></div>
+                <img class="cover-image" src="/images/book/cover.png" alt="စကြဝဠာမှ အသိစိတ်အထိ စာအုပ်အဖုံး" />
               </div>
-              <div class="cover-shadow-note">A short book about making room</div>
+              <div class="cover-shadow-note">စကြဝဠာမှ အသိစိတ်အထိ</div>
             </div>
           </div>
           <div class="hero-copy">
-            <div class="eyebrow" id="bookEyebrow">A short book about making room for what matters</div>
-            <h1 id="hero-title">The Shape<br><em>of Quiet.</em></h1>
-            <p class="lede" id="bookDek">A gentle, reflective sample publication for the Quiet Pages reading room. Start with the first pages and let the rest of the day grow a little quieter around you.</p>
+            <div class="eyebrow" id="bookEyebrow">စကြဝဠာမှ အသိစိတ်အထိ စူးစမ်းရှာဖွေမှု</div>
+            <h1 id="hero-title">စကြဝဠာမှ<br><em>အသိစိတ်အထိ</em></h1>
+            <p class="lede" id="bookDek">ဒီစာအုပ်ဟာ “ငါတို့ ဘယ်ကလာတာလဲ?” ဆိုတဲ့ မေးခွန်းနဲ့ စတင်ပြီး မဟာပေါက်ကွဲမှုကနေ သက်ရှိဘဝ၊ လူသားနဲ့ “ငါ” လို့ခေါ်တဲ့ အတ္တဇာတ်လမ်းအထိ ခရီးဆက်သွားစေပါတယ်။</p>
             <div class="hero-meta">
-              <div><span>Written by</span><strong id="bookAuthor">Aether Press · Sample Edition</strong></div>
-              <div><span>Free preview</span><strong>First 50 pages</strong></div>
-              <div><span>Format</span><strong>Immersive reader</strong></div>
+              <div><span>ရေးသားသူ</span><strong id="bookAuthor">Paing</strong></div>
+              <div><span>အခမဲ့ဖတ်ရှုရန်</span><strong>စာမျက်နှာ ၁ – ၆၆</strong></div>
+              <div><span>အကြောင်းအရာ</span><strong>စကြဝဠာ · သက်ရှိ · အသိစိတ်</strong></div>
             </div>
             <div class="cta-row">
-              <button class="primary-cta" type="button" data-open-reader>Begin free preview <span class="arrow" aria-hidden="true">→</span></button>
-              <a class="secondary-cta" href="#purchase">See the complete edition <span aria-hidden="true">↓</span></a>
+              <button class="primary-cta" type="button" data-open-reader>အခမဲ့ဖတ်ရှုမည် <span class="arrow" aria-hidden="true">→</span></button>
+              <a class="secondary-cta" href="#visuals">ပုံရိပ်များကို ကြည့်မည် <span aria-hidden="true">↓</span></a>
             </div>
-            <div class="preview-note"><i></i><span>No card required. Read the first 50 pages at your own pace.</span></div>
+            <div class="preview-note"><i></i><span>စာမျက်နှာ ၁ မှ ၆၆ အထိ အခမဲ့ဖတ်ရှုနိုင်ပါသည်။</span></div>
           </div>
         </section>
 
-        <section class="motion-rail" aria-label="Reading invitation">
-          <div class="motion-rail-track"><span>Read slowly.</span><em>Stay awhile.</em><span>Make room.</span><em>Turn the page.</em></div>
+        <section class="motion-rail" aria-label="ဖတ်ရှုရန် ဖိတ်ခေါ်မှု">
+          <div class="motion-rail-track"><span>ကြယ်မှုန်များမှ</span><em>အသိစိတ်အထိ</em><span>ခရီးတစ်စင်း</span><em>စတင်ပါ</em></div>
+        </section>
+
+        <section id="visuals" class="visual-atlas" aria-labelledby="visuals-title">
+          <div class="visual-atlas-heading"><div><div class="eyebrow">စာအုပ်ထဲက ကမ္ဘာများ</div><h2 id="visuals-title">အပြင်ဘက် စကြဝဠာမှ<br><em>အတွင်းဘက် စကြဝဠာအထိ</em></h2></div><p>စာအုပ်ထဲက အမှန်တကယ်ပါဝင်တဲ့ ပုံရိပ်များဖြင့် ခရီးစဉ်ရဲ့ အဆင့်ဆင့်ကို မြင်တွေ့ပါ။</p></div>
+          <div class="visual-grid">
+            <figure class="visual-card"><img src="/images/book/cosmos.jpg" alt="စကြဝဠာနှင့် ကြယ်များ" loading="lazy" /><figcaption>စကြဝဠာ၏ အစ</figcaption></figure>
+            <figure class="visual-card"><img src="/images/book/earth.jpg" alt="ကမ္ဘာမြေ" loading="lazy" /><figcaption>မတော်တဆ ဇာတ်လိုက်</figcaption></figure>
+            <figure class="visual-card"><img src="/images/book/life.jpg" alt="သက်ရှိနှင့် ကမ္ဘာမြေ" loading="lazy" /><figcaption>သက်ရှိ၏ မီးပွား</figcaption></figure>
+            <figure class="visual-card"><img src="/images/book/human-origins.jpg" alt="လူသားတို့၏ မူလအစ" loading="lazy" /><figcaption>လူသားတို့၏ ခရီး</figcaption></figure>
+            <figure class="visual-card"><img src="/images/book/brain.jpg" alt="ဦးနှောက်နှင့် အသိစိတ်" loading="lazy" /><figcaption>အတွင်းဘက် စကြဝဠာ</figcaption></figure>
+          </div>
         </section>
 
         <section id="purchase" class="purchase" aria-labelledby="purchase-title">
           <div class="purchase-card">
-            <div><div class="eyebrow">The complete edition</div><h2 id="purchase-title">If the story has found you,<br><em>the rest is waiting.</em></h2><p>Read the first 50 pages freely. When you are ready, the complete edition will open with a low-friction purchase and a private, protected reading experience.</p></div>
-            <div class="purchase-action"><a class="primary-cta" id="purchaseLink" href="#purchase">Purchase the book <span class="arrow" aria-hidden="true">→</span></a><div class="small-copy" id="purchasePrice">Complete edition · coming soon</div></div>
+            <div><div class="eyebrow">စာအုပ်အပြည့်အစုံ</div><h2 id="purchase-title">ခရီးစဉ်ကို ဆက်လက်ဖတ်ရှုပါ၊<br><em>ကျန်ရှိနေသေးတဲ့ ကမ္ဘာတွေက စောင့်နေပါတယ်။</em></h2><p>စာမျက်နှာ ၆၆ အထိ အခမဲ့ဖတ်ရှုပြီးနောက် စကြဝဠာမှ အသိစိတ်အထိ ခရီးစဉ်ကို အပြည့်အစုံ ဆက်လက်ဖတ်ရှုနိုင်ပါသည်။</p></div>
+            <div class="purchase-action"><a class="primary-cta" id="purchaseLink" href="#purchase">စာအုပ်အပြည့်အစုံ <span class="arrow" aria-hidden="true">→</span></a><div class="small-copy" id="purchasePrice">စာအုပ်အပြည့်အစုံ · မကြာမီ</div></div>
           </div>
         </section>
       </main>
-      <footer class="footer"><div class="footer-inner"><span>© 2026 Quiet Pages / Aether Press</span><span>Made for reading slowly.</span></div></footer>
+      <footer class="footer"><div class="footer-inner"><span>© 2026 Quiet Pages / Paing</span><span>ဖြည်းဖြည်းဖတ်ရှုရန် ဖန်တီးထားပါသည်။</span></div></footer>
     </div>
   </div>
 
-  <section id="reader" class="reader" hidden aria-label="Quiet Pages full-screen reader">
+    <section id="reader" class="reader" hidden aria-label="မျက်နှာပြင်အပြည့် စာဖတ်ခန်း">
     <canvas id="particleCanvas" aria-hidden="true"></canvas>
     <header class="reader-nav">
-      <div class="reader-brand"><button class="icon-button" type="button" data-close-reader aria-label="Back to book landing page">←</button><div><div class="reader-title" id="readerTitle">The Shape of Quiet</div><div class="reader-subtitle">Free preview · first 50 pages</div></div></div>
-      <div class="mood-bar" aria-label="Reader atmosphere"><button class="mood-button active" type="button" data-mood="magical">✨</button><button class="mood-button" type="button" data-mood="cozy">☕</button><button class="mood-button" type="button" data-mood="rainy">🌧</button><button class="mood-button" type="button" data-mood="dreamy">🌸</button></div>
-      <div class="reader-actions"><button class="icon-button" type="button" data-toggle-audio aria-label="Toggle ambient music">♫ <span class="equalizer" aria-hidden="true"><i></i><i></i><i></i></span></button><button class="icon-button" type="button" data-zoom-out aria-label="Zoom out">−</button><button class="icon-button" type="button" data-zoom-reset aria-label="Reset zoom">100</button><button class="icon-button" type="button" data-zoom-in aria-label="Zoom in">+</button><button class="icon-button" type="button" data-toggle-fullscreen aria-label="Enter full screen">⛶</button><button class="icon-button" type="button" data-close-reader aria-label="Close reader">×</button></div>
+      <div class="reader-brand"><button class="icon-button" type="button" data-close-reader aria-label="စာအုပ်မိတ်ဆက်စာမျက်နှာသို့ ပြန်သွားရန်">←</button><div><div class="reader-title" id="readerTitle">စကြဝဠာမှ အသိစိတ်အထိ</div><div class="reader-subtitle">အခမဲ့ဖတ်ရှုရန် · စာမျက်နှာ ၁ မှ ၆၆</div></div></div>
+      <div class="mood-bar" aria-label="ဖတ်ရှုရန် လေထုရွေးချယ်မှု"><button class="mood-button active" type="button" data-mood="magical">✨</button><button class="mood-button" type="button" data-mood="cozy">☕</button><button class="mood-button" type="button" data-mood="rainy">🌧</button><button class="mood-button" type="button" data-mood="dreamy">🌸</button></div>
+      <div class="reader-actions"><button class="icon-button" type="button" data-toggle-audio aria-label="နောက်ခံအသံ ဖွင့်/ပိတ်">♫ <span class="equalizer" aria-hidden="true"><i></i><i></i><i></i></span></button><button class="icon-button" type="button" data-zoom-out aria-label="ချုံ့ကြည့်ရန်">−</button><button class="icon-button" type="button" data-zoom-reset aria-label="ပုံမှန်အရွယ်အစား">100</button><button class="icon-button" type="button" data-zoom-in aria-label="ချဲ့ကြည့်ရန်">+</button><button class="icon-button" type="button" data-toggle-fullscreen aria-label="မျက်နှာပြင်အပြည့်">⛶</button><button class="icon-button" type="button" data-close-reader aria-label="စာဖတ်ခန်းပိတ်ရန်">×</button></div>
     </header>
     <div class="reader-main">
       <main class="reader-canvas">
-        <div class="reading-progress"><div class="progress-meta"><span>Free preview</span><strong id="progressLabel">Page 1 of 50</strong></div><div class="progress-track"><div id="progressFill" class="progress-fill"></div></div></div>
-        <div id="readerLoader" class="reader-loader"><i></i><span>Opening the sample edition…</span></div>
+        <div class="reading-progress"><div class="progress-meta"><span>အခမဲ့ဖတ်ရှုရန်</span><strong id="progressLabel">စာမျက်နှာ ၁ / ၆၆</strong></div><div class="progress-track"><div id="progressFill" class="progress-fill"></div></div></div>
+        <div id="readerLoader" class="reader-loader"><i></i><span>စာအုပ်ကို ဖွင့်နေပါသည်…</span></div>
         <div id="bookStage" class="book-stage" hidden><div id="bookWrapper" class="book-wrapper"><div id="flipbook"></div></div></div>
-        <div class="scrubber"><input id="pageSlider" type="range" min="0" max="49" value="0" aria-label="Jump to a preview page" /></div>
-        <div class="reader-footer"><div class="reader-controls"><button class="icon-button" type="button" data-sparkle aria-label="Burst of page sparkles">✦</button><button class="icon-button" type="button" data-prev-page aria-label="Previous page">‹</button><button class="icon-button" type="button" data-next-page aria-label="Next page">›</button></div></div>
-        <div class="gesture-hint">Drag a page corner to turn · pinch to zoom</div>
+        <div class="scrubber"><input id="pageSlider" type="range" min="0" max="65" value="0" aria-label="အစမ်းဖတ်စာမျက်နှာသို့ သွားရန်" /></div>
+        <div class="reader-footer"><div class="reader-controls"><button class="icon-button" type="button" data-sparkle aria-label="စာမျက်နှာအလင်းပွင့်များ">✦</button><button class="icon-button" type="button" data-prev-page aria-label="ယခင်စာမျက်နှာ">‹</button><button class="icon-button" type="button" data-next-page aria-label="နောက်စာမျက်နှာ">›</button></div></div>
+        <div class="gesture-hint">အပေါ်/အောက် ဆွဲပါ · လက်နှစ်ချောင်းဖြင့် ချဲ့ပါ</div>
       </main>
     </div>
   </section>
 
   <div id="paywall" class="paywall" hidden role="dialog" aria-modal="true" aria-labelledby="paywall-title">
-    <div class="paywall-card"><div class="paywall-glyph">⌁</div><div class="eyebrow">A quiet pause</div><h2 id="paywall-title">You’ve reached the end of the free preview.</h2><p>You’ve read the first 50 pages. If these pages have made a little room for you, the complete book is waiting on the other side.</p><a id="paywallCta" class="primary-cta" href="#purchase">Continue to the complete edition <span class="arrow" aria-hidden="true">→</span></a><button class="paywall-dismiss" type="button" data-dismiss-paywall>Return to page 50</button></div>
+    <div class="paywall-card"><div class="paywall-glyph">⌁</div><div class="eyebrow">ခဏနားပါ</div><h2 id="paywall-title">အခမဲ့ဖတ်ရှုနိုင်တဲ့ စာမျက်နှာတွေ ဒီမှာ ပြီးဆုံးပါပြီ။</h2><p>စာမျက်နှာ ၆၆ အထိ ဖတ်ရှုပြီးပါပြီ။ ဒီခရီးစဉ်က သင့်အတွက် စိတ်ဝင်စားစရာဖြစ်ခဲ့ရင် ကျန်ရှိတဲ့ စာမျက်နှာတွေက ဆက်လက်စောင့်ကြိုနေပါတယ်။</p><a id="paywallCta" class="primary-cta" href="#purchase">စာအုပ်အပြည့်အစုံကို ဆက်ဖတ်မည် <span class="arrow" aria-hidden="true">→</span></a><button class="paywall-dismiss" type="button" data-dismiss-paywall>စာမျက်နှာ ၆၆ သို့ ပြန်သွားမည်</button></div>
   </div>
-  <div id="privacyShield" class="privacy-shield" aria-hidden="true"><div><strong>Quiet Pages is paused.</strong><span>Return to this tab to continue reading.</span></div></div>
+  <div id="privacyShield" class="privacy-shield" aria-hidden="true"><div><strong>စာဖတ်ရှုမှုကို ခဏရပ်ထားပါသည်။</strong><span>ဆက်လက်ဖတ်ရှုရန် ဤစာမျက်နှာသို့ ပြန်လာပါ။</span></div></div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script>
@@ -278,10 +293,10 @@
     const particleContext = particleCanvas?.getContext('2d');
 
     const MOODS = {
-      magical: { name: 'Magical Wonder', gradient: 'radial-gradient(circle at center, #2a1847 0%, #0b0614 100%)', filter: 'brightness(1.02) contrast(1.04)', glow: 'rgba(255,215,0,.35)', type: 'sparkle', colors: ['#ffd700','#fff3b0','#c77dff','#ffffff'], chords: [['C3','G3','E4','B4'],['A2','E3','C4','G4'],['F2','C3','A3','E4']] },
-      cozy: { name: 'Cozy Fireplace', gradient: 'radial-gradient(circle at center, #422417 0%, #140905 100%)', filter: 'sepia(.22) brightness(.96) contrast(1.02)', glow: 'rgba(255,138,80,.35)', type: 'ember', colors: ['#ff7b00','#ffaa00','#ff5400','#ffd000'], chords: [['D3','A3','F#4','C#5'],['B2','F#3','D4','A4'],['G2','D3','B3','F#4']] },
-      rainy: { name: 'Melancholic Rain', gradient: 'radial-gradient(circle at center, #182936 0%, #070d12 100%)', filter: 'hue-rotate(185deg) saturate(.8) brightness(.93)', glow: 'rgba(125,211,252,.25)', type: 'rain', colors: ['#7dd3fc','#bae6fd','#38bdf8'], chords: [['A2','E3','C4','B4'],['F2','C3','A3','G4'],['D2','A2','F3','E4']] },
-      dreamy: { name: 'Dreamy Nostalgia', gradient: 'radial-gradient(circle at center, #3d1c2e 0%, #14080f 100%)', filter: 'sepia(.08) brightness(1.03)', glow: 'rgba(244,114,182,.35)', type: 'petal', colors: ['#fbcfe8','#f472b6','#fda4af','#fff1f2'], chords: [['F3','C4','A4','E5'],['E3','B3','G4','D5'],['D3','A3','F4','C5']] }
+      magical: { name: 'အံ့ဩဖွယ်', gradient: 'radial-gradient(circle at center, #2a1847 0%, #0b0614 100%)', filter: 'brightness(1.02) contrast(1.04)', glow: 'rgba(255,215,0,.35)', type: 'sparkle', colors: ['#ffd700','#fff3b0','#c77dff','#ffffff'], chords: [['C3','G3','E4','B4'],['A2','E3','C4','G4'],['F2','C3','A3','E4']] },
+      cozy: { name: 'နွေးထွေးသော မီးဖို', gradient: 'radial-gradient(circle at center, #422417 0%, #140905 100%)', filter: 'sepia(.22) brightness(.96) contrast(1.02)', glow: 'rgba(255,138,80,.35)', type: 'ember', colors: ['#ff7b00','#ffaa00','#ff5400','#ffd000'], chords: [['D3','A3','F#4','C#5'],['B2','F#3','D4','A4'],['G2','D3','B3','F#4']] },
+      rainy: { name: 'မိုးရေစက်များ', gradient: 'radial-gradient(circle at center, #182936 0%, #070d12 100%)', filter: 'hue-rotate(185deg) saturate(.8) brightness(.93)', glow: 'rgba(125,211,252,.25)', type: 'rain', colors: ['#7dd3fc','#bae6fd','#38bdf8'], chords: [['A2','E3','C4','B4'],['F2','C3','A3','G4'],['D2','A2','F3','E4']] },
+      dreamy: { name: 'အိပ်မက်ဆန်သော အမှတ်တရ', gradient: 'radial-gradient(circle at center, #3d1c2e 0%, #14080f 100%)', filter: 'sepia(.08) brightness(1.03)', glow: 'rgba(244,114,182,.35)', type: 'petal', colors: ['#fbcfe8','#f472b6','#fda4af','#fff1f2'], chords: [['F3','C4','A4','E5'],['E3','B3','G4','D5'],['D3','A3','F4','C5']] }
     };
 
     const $ = (selector) => document.querySelector(selector);
@@ -333,7 +348,7 @@
       initParticles();
       burstSparkles();
       if (state.audioPlaying) startAmbientAudio();
-      showToast(`Mood: ${mood.name}`);
+      showToast(`ဖတ်ရှုရန် လေထု: ${mood.name}`);
     }
 
     async function initAmbientAudio() {
@@ -344,7 +359,7 @@
 
     function stopAmbientAudio() { window.clearInterval(state.audioLoop); if (state.ambientPad) state.ambientPad.releaseAll(); state.audioLoop = null; }
     function startAmbientAudio() { stopAmbientAudio(); if (!state.audioPlaying || !state.ambientPad) return; let chordIndex = 0; const play = () => state.ambientPad?.triggerAttackRelease(MOODS[state.mood].chords[chordIndex++ % MOODS[state.mood].chords.length], '2n'); play(); state.audioLoop = window.setInterval(play, 3600); }
-    async function toggleAmbientAudio() { await initAmbientAudio(); state.audioPlaying = !state.audioPlaying; const equalizer = document.querySelector('.equalizer'); equalizer?.classList.toggle('visible', state.audioPlaying); if (state.audioPlaying) { startAmbientAudio(); showToast(`Playing ${MOODS[state.mood].name}`); } else { stopAmbientAudio(); showToast('Ambient music paused'); } }
+    async function toggleAmbientAudio() { await initAmbientAudio(); state.audioPlaying = !state.audioPlaying; const equalizer = document.querySelector('.equalizer'); equalizer?.classList.toggle('visible', state.audioPlaying); if (state.audioPlaying) { startAmbientAudio(); showToast(`${MOODS[state.mood].name} အသံဖွင့်ထားပါသည်`); } else { stopAmbientAudio(); showToast('နောက်ခံအသံကို ရပ်ထားပါသည်'); } }
 
     function safeRoute(pathname, replace = false) {
       if (window.location.pathname !== pathname) {
@@ -353,7 +368,6 @@
     }
 
     function showLanding(scrollTarget = '') {
-      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
       reader.hidden = true;
       landing.hidden = false;
       document.body.classList.remove('reader-mode');
@@ -365,20 +379,18 @@
       if (scrollTarget) window.setTimeout(() => document.querySelector(scrollTarget)?.scrollIntoView({ behavior: 'smooth' }), 40);
     }
 
-    async function showReader(event) {
-      if (event?.isTrusted && !document.fullscreenElement) Promise.resolve(reader.requestFullscreen?.()).catch(() => {});
-      wakeChrome();
+    async function showReader() {
       landing.hidden = true;
       reader.hidden = false;
       document.body.classList.add('reader-mode');
-      safeRoute('/read');
+      safeRoute('/book');
       if (!state.readerReady) await loadPreview();
     }
 
     function renderBookInfo(info) {
       state.info = info;
-      document.title = `${info.title} — Quiet Pages`;
-      $('#hero-title').innerHTML = `${escapeHtml(info.title.split(' ').slice(0, 2).join(' '))}<br><em>${escapeHtml(info.title.split(' ').slice(2).join(' ') || 'of Quiet')}.</em>`;
+      document.title = `${info.title} — Paing`;
+      $('#hero-title').innerHTML = 'စကြဝဠာမှ<br><em>အသိစိတ်အထိ</em>';
       $('#bookEyebrow').textContent = info.eyebrow;
       $('#bookDek').textContent = info.dek;
       $('#bookAuthor').textContent = info.author;
@@ -404,51 +416,43 @@
         renderBookInfo(info);
         if (!info.hasPreview) throw new Error('preview_missing');
         const pdf = await pdfjsLib.getDocument('/api/book-preview.pdf').promise;
-        const total = pdf.numPages;
-        const first = await pdf.getPage(1);
-        const base = first.getViewport({ scale: 1 });
-        state.pageRatio = base.height / base.width;
-        const fit = bookDimensions();
-        const density = Math.min(window.devicePixelRatio || 1, 2);
-        const renderScale = Math.max(1.2, Math.min(3, (fit.height * density * 1.25) / base.height));
-        state.pageElements = Array.from({ length: total }, (_, index) => {
-          const page = document.createElement('div');
-          page.className = 'page';
-          page.dataset.page = String(index + 1);
-          if (index === 0 || index === total - 1) page.dataset.density = 'hard';
-          page.innerHTML = `<img alt="Preview page ${index + 1}" />`;
-          return page;
-        });
-        const renderPage = async (number) => {
-          const pdfPage = number === 1 ? first : await pdf.getPage(number);
+        const elements = [];
+        const renderScale = window.devicePixelRatio > 1 ? 1.65 : 1.35;
+        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+          const pdfPage = await pdf.getPage(pageNumber);
           const viewport = pdfPage.getViewport({ scale: renderScale });
           const canvas = document.createElement('canvas');
           canvas.width = viewport.width;
           canvas.height = viewport.height;
           await pdfPage.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-          const src = canvas.toDataURL('image/webp', .9);
-          state.pageElements[number - 1].querySelector('img').src = src;
-          const live = document.querySelector(`#flipbook .page[data-page="${number}"] img`);
-          if (live) live.src = src;
-        };
-        await renderPage(1);
+          const page = document.createElement('div');
+          page.className = 'page';
+          page.dataset.page = String(pageNumber);
+          if (pageNumber === 1 || pageNumber === pdf.numPages) page.dataset.density = 'hard';
+          page.innerHTML = `<img src="${canvas.toDataURL('image/webp', .88)}" alt="Preview page ${pageNumber}" />`;
+          elements.push(page);
+        }
+        state.pageElements = elements;
         mountFlipbook(0);
         state.readerReady = true;
         $('#readerLoader').hidden = true;
         $('#bookStage').hidden = false;
-        (async () => { for (let n = 2; n <= total; n += 1) { try { await renderPage(n); } catch { /* page stays blank until reload */ } } })();
       } catch (error) {
-        $('#readerLoader').innerHTML = '<span>The sample edition could not be opened. Please refresh and try again.</span>';
-        showToast('The sample edition is taking a quiet moment.');
+        $('#readerLoader').innerHTML = '<span>စာအုပ်ကို ဖွင့်၍ မရသေးပါ။ ကျေးဇူးပြု၍ ပြန်လည်ဖွင့်ကြည့်ပါ။</span>';
+        showToast('စာအုပ်ကို ခဏစောင့်ပြီး ပြန်ဖွင့်ကြည့်ပါ။');
       }
     }
 
     function bookDimensions() {
-      const ratio = state.pageRatio || 1.414;
-      let height = window.innerHeight;
-      let width = Math.floor(height / ratio);
-      if (width > window.innerWidth) { width = window.innerWidth; height = Math.floor(width * ratio); }
-      return { width: Math.floor(width), height: Math.floor(height), portrait: true };
+      const mobile = window.innerWidth < 860;
+      const maxHeight = Math.max(300, window.innerHeight - 18);
+      if (mobile) {
+        const width = Math.min(window.innerWidth - 8, 540);
+        return { width, height: Math.min(maxHeight, width * 1.42), portrait: true };
+      }
+      const singleWidth = Math.min((window.innerWidth - 24) / 2, 820);
+      const height = Math.min(maxHeight, singleWidth * 1.42);
+      return { width: Math.floor(height / 1.42), height: Math.floor(height), portrait: false };
     }
 
     function mountFlipbook(startPage = 0) {
@@ -457,10 +461,7 @@
       container.innerHTML = '';
       state.pageElements.forEach((element) => container.appendChild(element.cloneNode(true)));
       const dimensions = bookDimensions();
-      const wrapper = $('#bookWrapper');
-      wrapper.style.width = container.style.width = `${dimensions.width}px`;
-      wrapper.style.height = container.style.height = `${dimensions.height}px`;
-      state.pageFlip = new St.PageFlip(container, { width: dimensions.width, height: dimensions.height, size: 'fixed', minWidth: 200, maxWidth: 3000, minHeight: 280, maxHeight: 4000, showCover: true, mobileScrollSupport: false, usePortrait: true, flippingTime: 950, maxShadowOpacity: .7, drawShadow: true, showPageCorners: true, swipeDistance: 24, startPage });
+      state.pageFlip = new St.PageFlip(container, { width: dimensions.width, height: dimensions.height, size: 'fixed', minWidth: 220, maxWidth: 820, minHeight: 300, maxHeight: 1200, showCover: true, mobileScrollSupport: false, usePortrait: dimensions.portrait, flippingTime: 780, maxShadowOpacity: .55, startPage });
       state.pageFlip.loadFromHTML(container.querySelectorAll('.page'));
       $('#pageSlider').max = Math.max(1, state.pageFlip.getPageCount() - 1);
       state.pageFlip.on('flip', () => { updateReaderMeta(); const rect = $('#bookWrapper').getBoundingClientRect(); burstSparkles(rect.left + rect.width / 2, rect.top + rect.height * .4, 18); });
@@ -472,7 +473,7 @@
       const current = state.pageFlip.getCurrentPageIndex();
       const pageNumber = Math.min(current + 1, state.info.previewPages);
       $('#pageSlider').value = current;
-      $('#progressLabel').textContent = `Page ${pageNumber} of ${state.info.previewPages}`;
+      $('#progressLabel').textContent = `စာမျက်နှာ ${pageNumber} / ${state.info.previewPages}`;
       $('#progressFill').style.width = `${Math.max(2, (pageNumber / state.info.previewPages) * 100)}%`;
     }
 
@@ -497,7 +498,7 @@
       state.zoom = Math.max(1, Math.min(2.1, Number(value.toFixed(2))));
       $('#bookStage').style.transform = `scale(${state.zoom})`;
       $('#bookStage').style.transformOrigin = 'center center';
-      if (announce) showToast(`Zoom ${Math.round(state.zoom * 100)}%`);
+      if (announce) showToast(`ချဲ့ကြည့်မှု ${Math.round(state.zoom * 100)}%`);
     }
 
     function adjustZoom(delta) { setZoom(state.zoom + delta); }
@@ -509,7 +510,7 @@
       } catch { showToast('Full-screen mode is unavailable in this browser'); }
     }
 
-    function closePaywall() { paywall.hidden = true; jumpToPage((state.info?.previewPages || 50) - 1); }
+    function closePaywall() { paywall.hidden = true; jumpToPage((state.info?.previewPages || 66) - 1); }
 
     $$('[data-open-reader]').forEach((button) => button.addEventListener('click', showReader));
     $$('[data-close-reader]').forEach((button) => button.addEventListener('click', () => showLanding()));
@@ -524,8 +525,8 @@
     $('[data-dismiss-paywall]').addEventListener('click', closePaywall);
     $$('.mood-button').forEach((button) => button.addEventListener('click', () => setMood(button.dataset.mood)));
     $('#pageSlider').addEventListener('input', (event) => jumpToPage(Number(event.target.value)));
-    $('#purchaseLink').addEventListener('click', (event) => { if (event.currentTarget.getAttribute('href') === '#purchase') { event.preventDefault(); showToast('Purchase checkout will connect to your payment link.'); } });
-    $('#paywallCta').addEventListener('click', (event) => { if (event.currentTarget.getAttribute('href') === '#purchase') { event.preventDefault(); paywall.hidden = true; showLanding('#purchase'); showToast('The complete-edition purchase area is ready for your checkout link.'); } });
+    $('#purchaseLink').addEventListener('click', (event) => { if (event.currentTarget.getAttribute('href') === '#purchase') { event.preventDefault(); showToast('ဝယ်ယူရန် လင့်ခ်ကို မကြာမီ ချိတ်ဆက်ပေးပါမည်။'); } });
+    $('#paywallCta').addEventListener('click', (event) => { if (event.currentTarget.getAttribute('href') === '#purchase') { event.preventDefault(); paywall.hidden = true; showLanding('#purchase'); showToast('စာအုပ်အပြည့်အစုံ ဝယ်ယူရန်နေရာကို ပြင်ဆင်ထားပါသည်။'); } });
 
     let touchStart = null;
     let pinchStart = null;
@@ -555,7 +556,8 @@
       const dy = touch.clientY - touchStart.y;
       const distance = Math.hypot(dx, dy);
       if (distance > 42 && Date.now() - touchStart.time < 900) {
-        if (Math.abs(dy) > Math.abs(dx) * 1.4) dy < 0 ? nextPage() : previousPage();
+        if (Math.abs(dy) > Math.abs(dx)) dy < 0 ? nextPage() : previousPage();
+        else dx < 0 ? nextPage() : previousPage();
       }
       touchStart = null;
     }, { passive: true });
@@ -576,15 +578,6 @@
       }
     }
 
-    let idleTimer = null;
-    function wakeChrome() {
-      reader.classList.remove('idle');
-      window.clearTimeout(idleTimer);
-      idleTimer = window.setTimeout(() => { if (!reader.hidden && paywall.hidden) reader.classList.add('idle'); }, 2800);
-    }
-    ['mousemove', 'pointerdown', 'touchstart', 'wheel'].forEach((name) => reader.addEventListener(name, wakeChrome, { passive: true }));
-    window.addEventListener('keydown', wakeChrome);
-
     window.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && !paywall.hidden) return closePaywall();
       if (reader.hidden) return;
@@ -600,7 +593,7 @@
     document.addEventListener('dragstart', (event) => event.preventDefault());
     document.addEventListener('visibilitychange', () => privacyShield.classList.toggle('visible', document.hidden));
     window.addEventListener('resize', () => { if (state.readerReady && !reader.hidden) { const current = state.pageFlip?.getCurrentPageIndex() || 0; window.clearTimeout(window.resizeTimer); window.resizeTimer = window.setTimeout(() => mountFlipbook(current), 220); } });
-    window.addEventListener('popstate', () => window.location.pathname === '/read' ? showReader() : showLanding());
+    window.addEventListener('popstate', () => ['/book', '/read'].includes(window.location.pathname) ? showReader() : showLanding());
     window.addEventListener('beforeinstallprompt', (event) => { event.preventDefault(); state.deferredInstallPrompt = event; });
     window.addEventListener('resize', () => { resizeParticles(); initParticles(); });
     window.addEventListener('DOMContentLoaded', () => {
@@ -610,7 +603,7 @@
       animateParticles();
       setupLandingMotion();
       fetch('/api/book-info').then((response) => response.json()).then(renderBookInfo).catch(() => {});
-      if (window.location.pathname === '/read') showReader();
+      if (['/book', '/read'].includes(window.location.pathname)) showReader();
     });
   </script>
 </body>

@@ -2,7 +2,7 @@
   "name": "quietpages",
   "version": "1.0.0",
   "private": true,
-  "description": "Quiet Pages editorial book landing page and 50-page preview reader",
+  "description": "Burmese editorial landing page and 66-page preview reader for Paing's book",
   "main": "server.js",
   "type": "commonjs",
   "packageManager": "pnpm@11.25.0",
@@ -13,8 +13,5 @@
   "dependencies": {
     "compression": "^1.7.4",
     "express": "^4.21.1"
-  },
-  "engines": {
-    "node": "22.x"
   }
 }

@@ -1,11 +1,11 @@
 {
-  "name": "Quiet Pages — The Shape of Quiet",
-  "short_name": "Quiet Pages",
+  "name": "စကြဝဠာမှ အသိစိတ်အထိ — Paing",
+  "short_name": "စကြဝဠာမှ အသိစိတ်အထိ",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#171a21",
   "theme_color": "#171a21",
-  "description": "A calm digital reading room for The Shape of Quiet.",
+  "description": "Paing ရေးသားသော စကြဝဠာမှ အသိစိတ်အထိ စာအုပ်ကို ဖြည်းဖြည်းဖတ်ရှုရန်။",
   "icons": [
     { "src": "/icons/bookmark.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
   ]
