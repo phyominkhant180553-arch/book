@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
   <style>
     :root {
       --ink: #171a21;
@@ -109,6 +111,21 @@
     .story-points { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:28px; }
     .story-point { padding:17px 18px; border-top:1px solid rgba(199,137,98,.5); color:var(--muted); font-size:.75rem; line-height:1.7; }
     .story-point strong { display:block; margin-bottom:5px; color:var(--paper); font-size:.82rem; font-weight:600; }
+    .poetry-section { position:relative; overflow:hidden; padding:24px 0 140px; background:linear-gradient(180deg, transparent, rgba(199,137,98,.055), transparent); }
+    .poetry-heading { display:flex; align-items:end; justify-content:space-between; gap:30px; margin-bottom:34px; }
+    .poetry-heading h2 { max-width:700px; margin:12px 0 0; font:400 clamp(2.5rem,6vw,6.2rem)/.92 var(--serif); letter-spacing:-.05em; }
+    .poetry-heading p { max-width:300px; color:var(--muted); font-size:.8rem; line-height:1.8; }
+    .poetry-pin { position:relative; min-height:clamp(430px,62vh,650px); display:flex; align-items:center; }
+    .poetry-track { display:flex; gap:24px; width:max-content; padding:30px 5vw 55px; will-change:transform; }
+    .poem-card { position:relative; display:flex; flex-direction:column; justify-content:space-between; width:min(74vw,480px); min-height:clamp(320px,48vh,500px); padding:clamp(28px,4vw,52px); border:1px solid rgba(199,137,98,.38); background:linear-gradient(145deg,rgba(57,44,45,.88),rgba(25,28,37,.96)); box-shadow:0 24px 70px rgba(0,0,0,.24); transform:rotate(var(--tilt)); }
+    .poem-card::before { content:"“"; position:absolute; top:15px; right:28px; color:rgba(227,176,141,.25); font:400 7rem/.7 var(--serif); }
+    .poem-card:nth-child(2) { --tilt:2deg; background:linear-gradient(145deg,rgba(38,51,59,.9),rgba(20,27,35,.96)); }
+    .poem-card:nth-child(3) { --tilt:-1.5deg; background:linear-gradient(145deg,rgba(52,39,59,.9),rgba(24,21,33,.96)); }
+    .poem-index { color:var(--copper-soft); font-size:.67rem; letter-spacing:.18em; }
+    .poem-card blockquote { position:relative; z-index:1; margin:34px 0 24px; color:var(--paper); font:400 clamp(1.45rem,3vw,2.35rem)/1.55 "Noto Serif Myanmar",var(--serif); }
+    .poem-card cite { color:var(--muted); font-size:.72rem; font-style:normal; line-height:1.7; }
+    .poetry-progress { position:absolute; left:5vw; right:5vw; bottom:7px; height:1px; background:rgba(246,240,231,.16); }
+    .poetry-progress i { display:block; width:18%; height:100%; background:var(--copper-soft); transform-origin:left; }
     .visual-grid { display:grid; grid-template-columns:1.25fr .75fr .9fr; grid-template-rows:220px 220px; gap:12px; }
     .visual-card { position:relative; overflow:hidden; min-height:180px; border:1px solid rgba(246,240,231,.14); background:#0a0b10; }
     .visual-card:first-child { grid-row:span 2; }
@@ -197,6 +214,12 @@
       .gesture-hint { display:none; }
       .story-section { grid-template-columns:1fr; gap:24px; padding-bottom:82px; }
       .story-points { grid-template-columns:1fr; }
+      .poetry-heading { display:block; }
+      .poetry-heading p { margin-top:22px; }
+      .poetry-pin { min-height:auto; overflow:auto; overscroll-behavior-x:contain; }
+      .poetry-track { padding-left:24px; padding-right:24px; }
+      .poem-card { width:min(82vw,390px); min-height:380px; }
+      .poetry-progress { display:none; }
     }
 
     @media print {
@@ -261,6 +284,21 @@
             <p>ဒီစာအုပ်ဟာ လွန်ခဲ့တဲ့ နှစ်ပေါင်း ၁၃.၈ ဘီလီယံက မဟာပေါက်ကွဲမှုနဲ့ စတင်ခဲ့တဲ့ ခရီးကို ပြန်လည်လိုက်လံကြည့်ရှုပါတယ်။ ကြယ်များ၊ ကမ္ဘာမြေ၊ သက်ရှိဘဝနဲ့ ဒိုင်နိုဆောများကို ကျော်ဖြတ်ပြီး လူသားဖြစ်လာတဲ့ အကြောင်းကို ရိုးရှင်းပြီး နက်နဲစွာ စူးစမ်းထားပါတယ်။</p>
             <p>ခရီးရဲ့ နောက်ဆုံးပိုင်းမှာတော့ ဦးနှောက်၊ ခံစားချက်နဲ့ “ငါ” လို့ခေါ်တဲ့ ဇာတ်လမ်းကို ပြန်လည်ကြည့်ရှုပါတယ်။ ဦးနှောက်က မိမိကိုယ်တိုင်ကို နားလည်နိုင်ခြင်းဟာ စကြဝဠာရဲ့ အံ့ဩစရာအကောင်းဆုံး ဖြစ်ရပ်တစ်ခုဖြစ်ကြောင်း ဒီစာအုပ်က ဖော်ပြထားပါတယ်။</p>
             <div class="story-points"><div class="story-point"><strong>စကြဝဠာ</strong>မဟာပေါက်ကွဲမှုမှ ကြယ်များနှင့် ကမ္ဘာမြေအထိ</div><div class="story-point"><strong>သက်ရှိ</strong>ပထမဆုံး အသက်မီးပွားမှ ဆင့်ကဲဖြစ်စဉ်အထိ</div><div class="story-point"><strong>လူသား</strong>လူသားတို့၏ မူလအစနှင့် သမိုင်းခရီး</div><div class="story-point"><strong>အသိစိတ်</strong>ဦးနှောက်၊ ခံစားချက်နှင့် “ငါ” ဇာတ်လမ်း</div></div>
+          </div>
+        </section>
+
+        <section id="poetry" class="poetry-section" aria-labelledby="poetry-title">
+          <div class="poetry-heading">
+            <div><div class="eyebrow">စာအုပ်ထဲက ကဗျာများ</div><h2 id="poetry-title">စကားလုံးတွေကြားမှာ<br><em>စကြဝဠာက အသက်ရှူနေတယ်</em></h2></div>
+            <p>စာအုပ်ထဲက အတွေးစများကို စာကြောင်းတိုများအဖြစ် ခဏနားပြီး ဖတ်ရှုပါ။ အောက်သို့ ဆွဲချသွားသည်နှင့် စာကြောင်းများက သင့်ရှေ့မှာ ဖြည်းဖြည်းချင်း ပွင့်လာပါမည်။</p>
+          </div>
+          <div class="poetry-pin">
+            <div class="poetry-track">
+              <article class="poem-card"><span class="poem-index">၀၁ · အစ</span><blockquote>ငါတို့ ဘယ်ကလာတာလဲ?</blockquote><cite>မေးခွန်းတစ်ခုကနေ ခရီးတစ်စင်း စတင်ခဲ့ပါတယ်။</cite></article>
+              <article class="poem-card"><span class="poem-index">၀၂ · ဝန်ခံခြင်း</span><blockquote>“ငါတို့ မသိဘူး” ဆိုတဲ့ အသိကနေ စတင်ပြီး</blockquote><cite>လေ့လာစူးစမ်းခြင်းနဲ့ စမ်းသပ်ခြင်းတွေက အလင်းကို ဖန်တီးခဲ့ပါတယ်။</cite></article>
+              <article class="poem-card"><span class="poem-index">၀၃ · အတွင်းကမ္ဘာ</span><blockquote>အပြင်ကမ္ဘာကို စူးစမ်းခဲ့တဲ့ ခရီးစဉ်ကို အဆုံးသတ်ပြီး အတွင်းကမ္ဘာထဲ ဆင်းသက်ရမယ့် အချိန်</blockquote><cite>ဦးနှောက်၊ ခံစားချက်နဲ့ “ငါ” ဇာတ်လမ်းဆီသို့။</cite></article>
+            </div>
+            <div class="poetry-progress" aria-hidden="true"><i></i></div>
           </div>
         </section>
 
@@ -586,14 +624,30 @@
 
     function setupLandingMotion() {
       if (!window.gsap) return;
-      if (window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-      gsap.from('.hero-copy > *', { y: 34, opacity: 0, duration: 1, stagger: .09, ease: 'power3.out' });
-      gsap.from('.cover-wrap', { y: 70, rotate: 6, opacity: 0, duration: 1.25, ease: 'power4.out' });
-      if (window.ScrollTrigger) {
+      const plugins = [window.ScrollTrigger, window.ScrollToPlugin, window.Observer].filter(Boolean);
+      if (plugins.length) gsap.registerPlugin(...plugins);
+      const mm = gsap.matchMedia();
+      mm.add({ desktop: '(min-width: 801px)', reduceMotion: '(prefers-reduced-motion: reduce)' }, ({ conditions }) => {
+        const { desktop, reduceMotion } = conditions;
+        gsap.from('.hero-copy > *', { y: reduceMotion ? 0 : 34, autoAlpha: reduceMotion ? 1 : 0, duration: reduceMotion ? 0 : 1, stagger: reduceMotion ? 0 : .09, ease: 'power3.out' });
+        gsap.from('.cover-wrap', { y: reduceMotion ? 0 : 70, rotate: reduceMotion ? 0 : 6, autoAlpha: reduceMotion ? 1 : 0, duration: reduceMotion ? 0 : 1.25, ease: 'power4.out' });
+        if (reduceMotion || !window.ScrollTrigger) return;
         gsap.to('.cover-wrap', { yPercent: 18, rotate: 2, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.2 } });
         gsap.to('.motion-rail-track', { xPercent: -22, ease: 'none', scrollTrigger: { trigger: '.motion-rail', start: 'top bottom', end: 'bottom top', scrub: 1 } });
-        gsap.from('.purchase-card', { y: 70, opacity: 0, scale: .97, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.purchase', start: 'top 78%' } });
-      }
+        gsap.from('.purchase-card', { y: 70, autoAlpha: 0, scale: .97, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.purchase', start: 'top 78%' } });
+        gsap.from('.story-section > *', { y: 60, autoAlpha: 0, duration: 1, stagger: .16, ease: 'power3.out', scrollTrigger: { trigger: '.story-section', start: 'top 78%' } });
+        gsap.from('.visual-card', { y: 55, rotation: (index) => index % 2 ? 2 : -2, autoAlpha: 0, duration: .85, stagger: .12, ease: 'back.out(1.2)', scrollTrigger: { trigger: '.visual-atlas', start: 'top 75%' } });
+        const poetrySection = document.querySelector('.poetry-section');
+        const poetryPin = document.querySelector('.poetry-pin');
+        const poetryTrack = document.querySelector('.poetry-track');
+        const poetryProgress = document.querySelector('.poetry-progress i');
+        if (desktop && poetrySection && poetryPin && poetryTrack) {
+          gsap.from('.poetry-heading > *', { y: 45, autoAlpha: 0, duration: .9, stagger: .14, ease: 'power3.out', scrollTrigger: { trigger: poetrySection, start: 'top 76%' } });
+          gsap.to(poetryTrack, { x: () => -Math.max(0, poetryTrack.scrollWidth - poetryPin.clientWidth + 48), ease: 'none', scrollTrigger: { trigger: poetrySection, start: 'top top', end: () => `+=${Math.max(window.innerHeight * 1.2, poetryTrack.scrollWidth - poetryPin.clientWidth)}`, pin: poetryPin, scrub: 1, invalidateOnRefresh: true, onUpdate: (self) => { if (poetryProgress) gsap.set(poetryProgress, { scaleX: .18 + self.progress * .82 }); } } });
+          gsap.from('.poem-card', { y: 80, rotation: 0, autoAlpha: 0, duration: .8, stagger: .16, ease: 'power3.out', scrollTrigger: { trigger: poetrySection, start: 'top 80%' } });
+        }
+      });
+      if (window.ScrollToPlugin) document.querySelectorAll('a[href="#poetry"]').forEach((link) => link.addEventListener('click', (event) => { event.preventDefault(); gsap.to(window, { duration: .9, scrollTo: { y: '#poetry', offsetY: 20 }, ease: 'power3.inOut' }); }));
     }
 
     window.addEventListener('keydown', (event) => {
