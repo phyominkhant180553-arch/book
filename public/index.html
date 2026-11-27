@@ -138,6 +138,14 @@
     .visual-card figcaption { position:absolute; left:18px; right:18px; bottom:16px; color:#fff; font-size:.7rem; letter-spacing:.08em; text-shadow:0 2px 14px #000; }
     .visual-cinema { position:relative; margin-top:28px; }
     .visual-cinema::before { content:""; position:absolute; inset:10% 18%; border-radius:50%; background:radial-gradient(circle,rgba(199,137,98,.18),transparent 68%); filter:blur(30px); pointer-events:none; }
+    .cinema-atmosphere { position:absolute; z-index:1; pointer-events:none; border-radius:50%; filter:blur(24px); mix-blend-mode:screen; opacity:.5; will-change:transform,opacity; }
+    .cinema-atmosphere-a { width:38%; height:62%; left:4%; top:12%; background:radial-gradient(circle,rgba(105,178,255,.34),transparent 68%); }
+    .cinema-atmosphere-b { width:44%; height:54%; right:3%; bottom:7%; background:radial-gradient(circle,rgba(239,157,92,.28),transparent 70%); }
+    .cinema-copy { position:absolute; z-index:8; left:clamp(18px,6vw,72px); bottom:clamp(26px,8vh,76px); width:min(360px,42%); pointer-events:none; text-shadow:0 3px 22px rgba(0,0,0,.6); }
+    .cinema-kicker { color:var(--copper-soft); font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; }
+    .cinema-copy h3 { margin:12px 0 9px; color:var(--paper); font:400 clamp(1.65rem,3.8vw,3.4rem)/1 var(--serif); letter-spacing:-.04em; }
+    .cinema-copy p { margin:0; color:rgba(246,240,231,.7); font-size:.76rem; line-height:1.8; }
+    .cinema-scanline { position:absolute; z-index:7; inset:0; pointer-events:none; background:linear-gradient(180deg,transparent 0%,rgba(246,240,231,.08) 48%,transparent 52%); opacity:0; mix-blend-mode:screen; will-change:transform,opacity; }
     .visual-progress { position:absolute; z-index:5; right:22px; bottom:22px; display:flex; align-items:center; gap:10px; color:rgba(246,240,231,.62); font-size:.65rem; letter-spacing:.14em; }
     .visual-progress-track { width:92px; height:2px; overflow:hidden; background:rgba(246,240,231,.22); }
     .visual-progress i { display:block; width:20%; height:100%; background:var(--copper-soft); transform-origin:left; }
@@ -156,8 +164,9 @@
       .visual-card:nth-child(3) { clip-path:polygon(0 4%,94% 0,100% 96%,5% 100%); }
       .visual-card:nth-child(4) { clip-path:polygon(4% 0,100% 5%,95% 100%,0 94%); }
       .visual-card:nth-child(5) { clip-path:polygon(0 0,96% 6%,100% 94%,5% 100%); }
-      .visual-card img { transition:none; }
+      .visual-card img { transition:none; will-change:transform,filter; }
       .visual-card figcaption { font-size:.78rem; }
+      .cinema-copy { opacity:.9; }
     }
     .hero-copy > *, .hero-art, .purchase-card { will-change:transform, opacity; }
 
@@ -253,6 +262,12 @@
       .visual-atlas-heading p { margin-top:20px; }
       .visual-grid { grid-template-columns:1fr; grid-template-rows:none; gap:10px; }
       .visual-card, .visual-card:first-child, .visual-card:last-child { grid-column:auto; grid-row:auto; min-height:54vw; }
+      .visual-cinema { margin-top:26px; }
+      .cinema-atmosphere { display:none; }
+      .cinema-copy { left:20px; right:20px; bottom:22px; width:auto; }
+      .cinema-copy h3 { font-size:2rem; }
+      .cinema-copy p { max-width:270px; }
+      .cinema-scanline { display:none; }
       .footer-inner { min-height:34px; align-items:center; }
       .mood-bar { top:65px; width:calc(100% - 30px); justify-content:space-between; }
       .mood-button { flex:1; padding-left:4px; padding-right:4px; }
@@ -329,6 +344,8 @@
         <section id="visuals" class="visual-atlas" aria-labelledby="visuals-title">
           <div class="visual-atlas-heading"><div><div class="eyebrow">စာအုပ်ထဲက ကမ္ဘာများ</div><h2 id="visuals-title">အပြင်ဘက် စကြဝဠာမှ<br><em>အတွင်းဘက် စကြဝဠာအထိ</em></h2></div><p>စာအုပ်ထဲက အမှန်တကယ်ပါဝင်တဲ့ ပုံရိပ်များဖြင့် ခရီးစဉ်ရဲ့ အဆင့်ဆင့်ကို မြင်တွေ့ပါ။</p></div>
           <div class="visual-cinema" aria-label="စာအုပ်ထဲက ပုံရိပ်များ၏ scroll ခရီးစဉ်">
+            <div class="cinema-atmosphere cinema-atmosphere-a" aria-hidden="true"></div>
+            <div class="cinema-atmosphere cinema-atmosphere-b" aria-hidden="true"></div>
             <div class="visual-grid">
               <figure class="visual-card"><img src="/images/book/cosmos.jpg" alt="စကြဝဠာနှင့် ကြယ်များ" loading="lazy" /><figcaption>စကြဝဠာ၏ အစ</figcaption></figure>
               <figure class="visual-card"><img src="/images/book/earth.jpg" alt="ကမ္ဘာမြေ" loading="lazy" /><figcaption>မတော်တဆ ဇာတ်လိုက်</figcaption></figure>
@@ -336,6 +353,8 @@
               <figure class="visual-card"><img src="/images/book/human-origins.jpg" alt="လူသားတို့၏ မူလအစ" loading="lazy" /><figcaption>လူသားတို့၏ ခရီး</figcaption></figure>
               <figure class="visual-card"><img src="/images/book/brain.jpg" alt="ဦးနှောက်နှင့် အသိစိတ်" loading="lazy" /><figcaption>အတွင်းဘက် စကြဝဠာ</figcaption></figure>
             </div>
+            <div class="cinema-copy" aria-live="polite"><span class="cinema-kicker">ခရီးစဉ် · ၀၁</span><h3>စကြဝဠာ၏ အစ</h3><p>ကြယ်မှုန်များထဲက မေးခွန်းတစ်ခု စတင်ပေါ်ပေါက်လာသည်။</p></div>
+            <div class="cinema-scanline" aria-hidden="true"></div>
             <div class="visual-progress" aria-hidden="true"><span>၀၁ — ၀၅</span><div class="visual-progress-track"><i></i></div></div>
           </div>
         </section>
@@ -734,23 +753,73 @@
         const visualCards = Array.from(document.querySelectorAll('.visual-card'));
         const visualProgress = document.querySelector('.visual-progress i');
         const visualCounter = document.querySelector('.visual-progress span');
+        const cinemaCopy = document.querySelector('.cinema-copy');
+        const cinemaKicker = cinemaCopy?.querySelector('.cinema-kicker');
+        const cinemaTitle = cinemaCopy?.querySelector('h3');
+        const cinemaDescription = cinemaCopy?.querySelector('p');
+        const cinemaAtmosphere = document.querySelectorAll('.cinema-atmosphere');
+        const cinemaScanline = document.querySelector('.cinema-scanline');
+        const chapters = [
+          { title: 'စကြဝဠာ၏ အစ', copy: 'ကြယ်မှုန်များထဲက မေးခွန်းတစ်ခု စတင်ပေါ်ပေါက်လာသည်။' },
+          { title: 'မတော်တဆ ဇာတ်လိုက်', copy: 'အမှုန်များ၊ အပူနှင့် အချိန်တို့က ကမ္ဘာမြေကို ပုံဖော်ခဲ့သည်။' },
+          { title: 'သက်ရှိ၏ မီးပွား', copy: 'တိတ်ဆိတ်နေသော ရေထဲက အသက်ရှူသံတစ်ခု စတင်ခဲ့သည်။' },
+          { title: 'လူသားတို့၏ ခရီး', copy: 'မေးခွန်းမေးနိုင်သော သတ္တဝါတစ်မျိုး ကမ္ဘာကို ပြန်ကြည့်လာသည်။' },
+          { title: 'အတွင်းဘက် စကြဝဠာ', copy: 'နောက်ဆုံးမှာ စကြဝဠာက မိမိကိုယ်ကို မိမိ စူးစမ်းနေသည်။' }
+        ];
+        const updateChapterCopy = (index, animate = true) => {
+          const chapter = chapters[index];
+          if (!chapter || !cinemaCopy || !cinemaTitle || !cinemaDescription) return;
+          cinemaKicker.textContent = `ခရီးစဉ် · ${digit(index + 1).padStart(2, '၀')}`;
+          cinemaTitle.textContent = chapter.title;
+          cinemaDescription.textContent = chapter.copy;
+          if (animate && !reduceMotion) gsap.fromTo(cinemaCopy, { y: 16, autoAlpha: .1 }, { y: 0, autoAlpha: 1, duration: .55, ease: 'power3.out', overwrite: true });
+        };
         if (desktop && visualCinema && visualCards.length) {
           const burmeseDigits = '၀၁၂၃၄၅၆၇၈၉';
           const digit = (value) => String(value).split('').map((number) => burmeseDigits[number] || number).join('');
-          gsap.set(visualCards, { autoAlpha: 0, scale: .78, x: 0, y: 36, rotation: 0, filter: 'brightness(.45) saturate(.7)' });
-          gsap.set(visualCards[0], { autoAlpha: 1, scale: .92, y: 0, zIndex: 5, filter: 'brightness(1) saturate(1)' });
-          const visualTimeline = gsap.timeline({ scrollTrigger: { trigger: visualCinema, start: 'top top', end: () => `+=${Math.max(2400, visualCards.length * 720)}`, pin: visualCinema, scrub: 1.15, anticipatePin: 1, invalidateOnRefresh: true, onUpdate: (self) => { const index = Math.min(visualCards.length, Math.max(1, Math.ceil(self.progress * visualCards.length))); if (visualProgress) gsap.set(visualProgress, { scaleX: Math.max(.18, self.progress) }); if (visualCounter) visualCounter.textContent = `${digit(index).padStart(2, '၀')} — ${digit(visualCards.length).padStart(2, '၀')}`; } } });
+          const sceneStarts = [0, '+=.15', '+=.15', '+=.15', '+=.15'];
+          const sceneIn = [
+            { autoAlpha: 1, scale: 1.05, rotation: -2, y: 0, filter: 'brightness(1) saturate(1)', clipPath: 'inset(0% 0% 0% 0%)' },
+            { autoAlpha: 1, scale: 1, rotation: 4, x: 0, y: 0, filter: 'brightness(1.02) saturate(1.08)', clipPath: 'polygon(8% 0,100% 4%,94% 100%,0 94%)' },
+            { autoAlpha: 1, scale: 1.04, rotation: -1.5, x: 0, y: 0, filter: 'brightness(1.06) saturate(1.2)', clipPath: 'inset(0% 0% 0% 0%)' },
+            { autoAlpha: 1, scale: 1, rotation: -4, x: 0, y: 0, filter: 'brightness(.98) saturate(1.12)', clipPath: 'polygon(0 6%,94% 0,100% 94%,5% 100%)' },
+            { autoAlpha: 1, scale: 1.02, rotation: 2, x: 0, y: 0, filter: 'brightness(1.08) saturate(1.28)', clipPath: 'inset(0% 0% 0% 0%)' }
+          ];
+          gsap.set(visualCards, { autoAlpha: 0, scale: .78, x: 0, y: 36, rotation: 0, zIndex: 0, filter: 'brightness(.35) saturate(.5) blur(2px)', clipPath: 'inset(0 100% 0 0)' });
+          gsap.set(visualCards[0], { autoAlpha: 1, scale: .88, y: 20, zIndex: 5, filter: 'brightness(.62) saturate(.72) blur(1px)', clipPath: 'inset(0 0 0 0)' });
+          gsap.set(cinemaAtmosphere, { scale: .75, autoAlpha: .2 });
+          let activeChapter = -1;
+          const visualTimeline = gsap.timeline({ scrollTrigger: { trigger: visualCinema, start: 'top top', end: () => `+=${Math.max(3200, visualCards.length * 860)}`, pin: visualCinema, scrub: 1.05, anticipatePin: 1, invalidateOnRefresh: true, onUpdate: (self) => { const index = Math.min(visualCards.length - 1, Math.max(0, Math.floor(self.progress * visualCards.length))); if (visualProgress) gsap.set(visualProgress, { scaleX: Math.max(.18, self.progress) }); if (visualCounter) visualCounter.textContent = `${digit(index + 1).padStart(2, '၀')} — ${digit(visualCards.length).padStart(2, '၀')}`; if (index !== activeChapter) { activeChapter = index; updateChapterCopy(index); } } } });
           visualCards.forEach((card, index) => {
             const image = card.querySelector('img');
-            const driftX = index % 2 ? -5 : 5;
-            const driftY = index % 3 ? -3 : 3;
-            if (index > 0) visualTimeline.to(card, { autoAlpha: 1, scale: 1, x: 0, y: 0, rotation: index % 2 ? 2 : -2, zIndex: 5, filter: 'brightness(1) saturate(1)', duration: 1.05, ease: 'power2.out' }, `>${index === 1 ? 0 : .14}`);
-            visualTimeline.to(image, { scale: 1.16, xPercent: driftX, yPercent: driftY, duration: 1.55, ease: 'none' }, '<');
-            visualTimeline.to(card, { scale: 1.08, rotation: index % 2 ? -1.5 : 1.5, filter: 'brightness(.82) saturate(1.28)', duration: 1.1, ease: 'none' });
-            if (index < visualCards.length - 1) visualTimeline.to(card, { autoAlpha: 0, scale: .72, x: index % 2 ? 110 : -110, y: -26, rotation: index % 2 ? 8 : -8, filter: 'brightness(.4) saturate(.55)', duration: .85, ease: 'power2.in' });
+            visualTimeline.addLabel(`chapter-${index}`, sceneStarts[index]);
+            if (index > 0) {
+              visualTimeline.to(card, { ...sceneIn[index], zIndex: 5, duration: 1.1, ease: index === 2 ? 'power3.out' : 'power2.out' }, `chapter-${index}`);
+            } else {
+              visualTimeline.to(card, { ...sceneIn[0], zIndex: 5, duration: .95, ease: 'power2.out' }, 'chapter-0');
+            }
+            const imageMotion = [
+              { scale: 1.2, xPercent: 8, yPercent: -5, rotation: 1.5 },
+              { scale: 1.16, xPercent: -7, yPercent: 4, rotation: -1 },
+              { scale: 1.24, xPercent: 6, yPercent: -8, rotation: 2.5 },
+              { scale: 1.13, xPercent: -10, yPercent: 3, rotation: -2 },
+              { scale: 1.2, xPercent: 4, yPercent: -4, rotation: 1 }
+            ][index];
+            visualTimeline.to(image, { ...imageMotion, duration: 1.4, ease: 'none' }, '<');
+            visualTimeline.to(card, { scale: index === 4 ? 1.1 : 1.06, rotation: index % 2 ? -2 : 2, filter: 'brightness(.82) saturate(1.22)', duration: .72, ease: 'none' });
+            if (index < visualCards.length - 1) visualTimeline.to(card, { autoAlpha: 0, scale: index === 1 ? .86 : .72, x: index % 2 ? 150 : -150, y: index === 2 ? -80 : -28, rotation: index % 2 ? 10 : -10, filter: 'brightness(.25) saturate(.4) blur(3px)', clipPath: index === 0 ? 'circle(18% at 50% 50%)' : 'inset(0 100% 0 0)', duration: .8, ease: 'power3.in' });
+            visualTimeline.to(cinemaAtmosphere[0], { xPercent: index % 2 ? -18 : 16, yPercent: index % 3 ? 12 : -14, scale: 1 + index * .14, autoAlpha: .24 + index * .04, duration: 1.15, ease: 'sine.inOut' }, '<');
+            visualTimeline.to(cinemaAtmosphere[1], { xPercent: index % 2 ? 16 : -14, yPercent: index % 3 ? -12 : 16, scale: 1.1 + index * .12, autoAlpha: .2 + index * .05, duration: 1.15, ease: 'sine.inOut' }, '<');
+            if (cinemaScanline && index < visualCards.length - 1) visualTimeline.to(cinemaScanline, { yPercent: 100, autoAlpha: .5, duration: .18, ease: 'power2.in' }).to(cinemaScanline, { yPercent: 240, autoAlpha: 0, duration: .36, ease: 'power2.out' });
           });
+          updateChapterCopy(0, false);
         } else {
-          gsap.from('.visual-card', { y: 55, rotation: (index) => index % 2 ? 2 : -2, autoAlpha: 0, duration: .85, stagger: .12, ease: 'back.out(1.2)', scrollTrigger: { trigger: '.visual-atlas', start: 'top 75%' } });
+          visualCards.forEach((card, index) => {
+            const image = card.querySelector('img');
+            const entry = index % 3 === 0 ? { x: -42, y: 42, rotation: -4, scale: .88 } : index % 3 === 1 ? { x: 40, y: 28, rotation: 3, scale: .94 } : { y: 55, rotation: -2, scale: .9 };
+            gsap.fromTo(card, { ...entry, autoAlpha: 0, filter: 'brightness(.55) saturate(.7)' }, { x: 0, y: 0, rotation: 0, scale: 1, autoAlpha: 1, filter: 'brightness(1) saturate(1.08)', duration: .9, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 82%', end: 'top 45%', scrub: .7, onEnter: () => updateChapterCopy(index) } });
+            gsap.fromTo(image, { scale: 1.16, xPercent: index % 2 ? 8 : -8 }, { scale: 1.03, xPercent: index % 2 ? -4 : 4, ease: 'none', scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: 1.1 } });
+          });
         }
         const poetrySection = document.querySelector('.poetry-section');
         const poetryPin = document.querySelector('.poetry-pin');
