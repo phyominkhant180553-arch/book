@@ -23,7 +23,7 @@ const book = {
   author: process.env.BOOK_AUTHOR || 'Paing',
   eyebrow: 'စကြဝဠာမှ အသိစိတ်အထိ စူးစမ်းရှာဖွေမှု',
   dek: 'ဒီစာအုပ်ဟာ “ငါတို့ ဘယ်ကလာတာလဲ?” ဆိုတဲ့ မေးခွန်းနဲ့ စတင်ပြီး မဟာပေါက်ကွဲမှုကနေ သက်ရှိဘဝ၊ လူသားနဲ့ “ငါ” လို့ခေါ်တဲ့ အတ္တဇာတ်လမ်းအထိ ခရီးဆက်သွားစေပါတယ်။',
-  price: process.env.BOOK_PRICE || 'စာအုပ်အပြည့်အစုံ · မကြာမီ',
+  price: process.env.BOOK_PRICE && !process.env.BOOK_PRICE.includes('မကြာမီ') ? process.env.BOOK_PRICE : 'စာအုပ်အပြည့်အစုံ',
   purchaseUrl: process.env.BOOK_PURCHASE_URL || '#purchase',
   previewPages: FREE_PREVIEW_PAGES,
   totalPages: TOTAL_BOOK_PAGES,
