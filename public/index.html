@@ -138,6 +138,12 @@
     .visual-progress { position:absolute; z-index:5; right:22px; bottom:22px; display:flex; align-items:center; gap:10px; color:rgba(246,240,231,.62); font-size:.65rem; letter-spacing:.14em; }
     .visual-progress-track { width:92px; height:2px; overflow:hidden; background:rgba(246,240,231,.22); }
     .visual-progress i { display:block; width:20%; height:100%; background:var(--copper-soft); transform-origin:left; }
+    .scroll-progress { position:fixed; inset:0 0 auto 0; z-index:60; height:3px; transform:scaleX(0); transform-origin:left center; background:linear-gradient(90deg,var(--copper),var(--paper)); pointer-events:none; }
+    body.reader-mode .scroll-progress { display:none; }
+    .depth-band { position:relative; display:grid; place-items:center; height:72vh; min-height:360px; margin:0 0 118px; overflow:hidden; isolation:isolate; }
+    .depth-band::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(5,5,9,.2),rgba(5,5,9,.72)); }
+    .depth-band img { position:absolute; inset:-10% 0; z-index:-2; width:100%; height:120%; object-fit:cover; filter:brightness(.55) saturate(1.05); will-change:transform; }
+    .depth-band em { position:relative; color:var(--paper); font:italic 400 clamp(2.6rem,9vw,8rem)/1 var(--serif); text-shadow:0 4px 40px #000; will-change:transform,opacity,letter-spacing; }
     @media (min-width:801px) {
       .visual-cinema { min-height:clamp(520px,72vh,760px); display:flex; align-items:center; justify-content:center; overflow:hidden; }
       .visual-grid { position:relative; width:min(78vw,980px); height:min(66vh,650px); display:block; perspective:1400px; }
@@ -237,6 +243,7 @@
       .poetry-track { padding-left:24px; padding-right:24px; }
       .poem-card { width:min(82vw,390px); min-height:380px; }
       .poetry-progress { display:none; }
+      .depth-band { height:58vh; min-height:320px; margin-bottom:84px; }
     }
 
     @media print {
@@ -284,6 +291,7 @@
           <div class="motion-rail-track"><span>ကြယ်မှုန်များမှ</span><em>အသိစိတ်အထိ</em><span>ခရီးတစ်စင်း</span><em>စတင်ပါ</em></div>
         </section>
 
+        <div class="scroll-progress" aria-hidden="true"></div>
         <section id="visuals" class="visual-atlas" aria-labelledby="visuals-title">
           <div class="visual-atlas-heading"><div><div class="eyebrow">စာအုပ်ထဲက ကမ္ဘာများ</div><h2 id="visuals-title">အပြင်ဘက် စကြဝဠာမှ<br><em>အတွင်းဘက် စကြဝဠာအထိ</em></h2></div><p>စာအုပ်ထဲက အမှန်တကယ်ပါဝင်တဲ့ ပုံရိပ်များဖြင့် ခရီးစဉ်ရဲ့ အဆင့်ဆင့်ကို မြင်တွေ့ပါ။</p></div>
           <div class="visual-cinema" aria-label="စာအုပ်ထဲက ပုံရိပ်များ၏ scroll ခရီးစဉ်">
@@ -297,6 +305,8 @@
             <div class="visual-progress" aria-hidden="true"><span>၀၁ — ၀၅</span><div class="visual-progress-track"><i></i></div></div>
           </div>
         </section>
+
+        <section class="depth-band" aria-label="အသိစိတ်အထိ ခရီးစဉ်"><img src="/images/book/consciousness.jpg" alt="" loading="lazy" /><em>အသိစိတ်အထိ</em></section>
 
         <section id="about" class="story-section" aria-labelledby="story-title">
           <div><div class="eyebrow">စာအုပ်အကြောင်းအရာ</div><h2 id="story-title">ငါတို့ ဘယ်ကလာတာလဲ?<br><em>ဘယ်ကို ဆက်သွားနေကြတာလဲ?</em></h2></div>
@@ -455,11 +465,12 @@
       if (scrollTarget) window.setTimeout(() => document.querySelector(scrollTarget)?.scrollIntoView({ behavior: 'smooth' }), 40);
     }
 
-    async function showReader() {
+    async function showReader(event) {
       landing.hidden = true;
       reader.hidden = false;
       document.body.classList.add('reader-mode');
       safeRoute('/book');
+      if (event?.isTrusted && !document.fullscreenElement) Promise.resolve(reader.requestFullscreen?.()).catch(() => {});
       if (!state.readerReady) await loadPreview();
     }
 
@@ -492,27 +503,35 @@
         renderBookInfo(info);
         if (!info.hasPreview) throw new Error('preview_missing');
         const pdf = await pdfjsLib.getDocument('/api/book-preview.pdf').promise;
-        const elements = [];
+        const total = pdf.numPages;
         const renderScale = window.devicePixelRatio > 1 ? 1.65 : 1.35;
-        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+        state.pageElements = Array.from({ length: total }, (_, index) => {
+          const pageNumber = index + 1;
+          const page = document.createElement('div');
+          page.className = 'page';
+          page.dataset.page = String(pageNumber);
+          if (pageNumber === 1 || pageNumber === total) page.dataset.density = 'hard';
+          page.innerHTML = `<img alt="Preview page ${pageNumber}" />`;
+          return page;
+        });
+        const renderPage = async (pageNumber) => {
           const pdfPage = await pdf.getPage(pageNumber);
           const viewport = pdfPage.getViewport({ scale: renderScale });
           const canvas = document.createElement('canvas');
           canvas.width = viewport.width;
           canvas.height = viewport.height;
           await pdfPage.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-          const page = document.createElement('div');
-          page.className = 'page';
-          page.dataset.page = String(pageNumber);
-          if (pageNumber === 1 || pageNumber === pdf.numPages) page.dataset.density = 'hard';
-          page.innerHTML = `<img src="${canvas.toDataURL('image/webp', .88)}" alt="Preview page ${pageNumber}" />`;
-          elements.push(page);
-        }
-        state.pageElements = elements;
+          const source = canvas.toDataURL('image/webp', .88);
+          state.pageElements[pageNumber - 1].querySelector('img').src = source;
+          const livePage = document.querySelector(`#flipbook .page[data-page="${pageNumber}"] img`);
+          if (livePage) livePage.src = source;
+        };
+        await renderPage(1);
         mountFlipbook(0);
         state.readerReady = true;
         $('#readerLoader').hidden = true;
         $('#bookStage').hidden = false;
+        (async () => { for (let pageNumber = 2; pageNumber <= total; pageNumber += 1) { try { await renderPage(pageNumber); } catch { /* keep an unavailable page blank */ } } })();
       } catch (error) {
         $('#readerLoader').innerHTML = '<span>စာအုပ်ကို ဖွင့်၍ မရသေးပါ။ ကျေးဇူးပြု၍ ပြန်လည်ဖွင့်ကြည့်ပါ။</span>';
         showToast('စာအုပ်ကို ခဏစောင့်ပြီး ပြန်ဖွင့်ကြည့်ပါ။');
@@ -652,10 +671,19 @@
         gsap.from('.hero-copy > *', { y: reduceMotion ? 0 : 34, autoAlpha: reduceMotion ? 1 : 0, duration: reduceMotion ? 0 : 1, stagger: reduceMotion ? 0 : .09, ease: 'power3.out' });
         gsap.from('.cover-wrap', { y: reduceMotion ? 0 : 70, rotate: reduceMotion ? 0 : 6, autoAlpha: reduceMotion ? 1 : 0, duration: reduceMotion ? 0 : 1.25, ease: 'power4.out' });
         if (reduceMotion || !window.ScrollTrigger) return;
+        const scrollProgress = document.querySelector('.scroll-progress');
+        if (scrollProgress) gsap.to(scrollProgress, { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: .3 } });
         gsap.to('.cover-wrap', { yPercent: 18, rotate: 2, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.2 } });
         gsap.to('.motion-rail-track', { xPercent: -22, ease: 'none', scrollTrigger: { trigger: '.motion-rail', start: 'top bottom', end: 'bottom top', scrub: 1 } });
         gsap.from('.purchase-card', { y: 70, autoAlpha: 0, scale: .97, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.purchase', start: 'top 78%' } });
-        gsap.from('.story-section > *', { y: 60, autoAlpha: 0, duration: 1, stagger: .16, ease: 'power3.out', scrollTrigger: { trigger: '.story-section', start: 'top 78%' } });
+        gsap.from('.visual-atlas-heading > *, .story-section h2', { y: 50, autoAlpha: 0, duration: 1, stagger: .14, ease: 'power3.out', scrollTrigger: { trigger: '.visual-atlas', start: 'top 78%' } });
+        gsap.from('.story-copy p', { y: 40, autoAlpha: 0, duration: 1, stagger: .15, ease: 'power3.out', scrollTrigger: { trigger: '.story-copy', start: 'top 80%' } });
+        gsap.from('.story-point', { y: 30, autoAlpha: 0, duration: .9, stagger: .12, ease: 'power2.out', scrollTrigger: { trigger: '.story-points', start: 'top 88%' } });
+        const depthBand = document.querySelector('.depth-band');
+        if (depthBand) {
+          gsap.fromTo(depthBand.querySelector('img'), { scale: 1.5, yPercent: -14 }, { scale: 1.08, yPercent: 14, ease: 'none', scrollTrigger: { trigger: depthBand, start: 'top bottom', end: 'bottom top', scrub: true } });
+          gsap.fromTo(depthBand.querySelector('em'), { autoAlpha: 0, letterSpacing: '.3em', y: 40 }, { autoAlpha: 1, letterSpacing: '0em', y: 0, ease: 'none', scrollTrigger: { trigger: depthBand, start: 'top 70%', end: 'center center', scrub: true } });
+        }
         const visualCinema = document.querySelector('.visual-cinema');
         const visualCards = Array.from(document.querySelectorAll('.visual-card'));
         const visualProgress = document.querySelector('.visual-progress i');
@@ -687,6 +715,7 @@
           gsap.to(poetryTrack, { x: () => -Math.max(0, poetryTrack.scrollWidth - poetryPin.clientWidth + 48), ease: 'none', scrollTrigger: { trigger: poetrySection, start: 'top top', end: () => `+=${Math.max(window.innerHeight * 1.2, poetryTrack.scrollWidth - poetryPin.clientWidth)}`, pin: poetryPin, scrub: 1, invalidateOnRefresh: true, onUpdate: (self) => { if (poetryProgress) gsap.set(poetryProgress, { scaleX: .18 + self.progress * .82 }); } } });
           gsap.from('.poem-card', { y: 80, rotation: 0, autoAlpha: 0, duration: .8, stagger: .16, ease: 'power3.out', scrollTrigger: { trigger: poetrySection, start: 'top 80%' } });
         }
+        window.addEventListener('load', () => window.ScrollTrigger?.refresh(), { once: true });
       });
       if (window.ScrollToPlugin) document.querySelectorAll('a[href="#poetry"]').forEach((link) => link.addEventListener('click', (event) => { event.preventDefault(); gsap.to(window, { duration: .9, scrollTo: { y: '#poetry', offsetY: 20 }, ease: 'power3.inOut' }); }));
     }

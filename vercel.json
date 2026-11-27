@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node",
-      "config": { "includeFiles": ["public/**", "books/**"] }
-    }
-  ],
-  "routes": [{ "src": "/(.*)", "dest": "/server.js" }]
+  "framework": null,
+  "outputDirectory": "public",
+  "rewrites": [
+    { "source": "/api/book-preview.pdf", "destination": "/paing-book-preview.pdf" },
+    { "source": "/api/(.*)", "destination": "/api" },
+    { "source": "/book", "destination": "/index.html" },
+    { "source": "/read", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" }
+  ]
 }

@@ -8,11 +8,13 @@ const PORT = Number(process.env.PORT || 3000);
 const HOST = '0.0.0.0';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
+const PUBLIC_DIR = path.join(__dirname, 'public');
 const BOOK_DIR = path.join(__dirname, 'books');
 const FULL_BOOK_PATH = path.join(BOOK_DIR, 'paing-book.pdf');
-const PREVIEW_BOOK_PATH = path.join(BOOK_DIR, 'paing-book-preview.pdf');
+const PUBLIC_PREVIEW_BOOK_PATH = path.join(PUBLIC_DIR, 'paing-book-preview.pdf');
+const BOOK_PREVIEW_PATH = path.join(BOOK_DIR, 'paing-book-preview.pdf');
+const PREVIEW_BOOK_PATH = fs.existsSync(PUBLIC_PREVIEW_BOOK_PATH) ? PUBLIC_PREVIEW_BOOK_PATH : BOOK_PREVIEW_PATH;
 const FULL_BOOK_PARTS = ['paing-book.pdf.part-01', 'paing-book.pdf.part-02', 'paing-book.pdf.part-03', 'paing-book.pdf.part-04'].map((name) => path.join(BOOK_DIR, name));
-const PUBLIC_DIR = path.join(__dirname, 'public');
 const FREE_PREVIEW_PAGES = 66;
 const TOTAL_BOOK_PAGES = 99;
 
@@ -79,7 +81,7 @@ app.get('/api/book-info', (req, res) => {
   res.json({
     ...book,
     source: 'local-authentic-book',
-    hasPreview: fs.existsSync(PREVIEW_BOOK_PATH),
+    hasPreview: fs.existsSync(PREVIEW_BOOK_PATH) || process.env.VERCEL === '1',
     hasFullBook: false,
     fullBookRequiresEntitlement: true
   });
@@ -139,12 +141,16 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
 });
 
-app.listen(PORT, HOST, () => {
-  ensureFullBook();
-  safeLog('info', 'server_started', {
-    port: PORT,
-    production: IS_PRODUCTION,
-    previewReady: fs.existsSync(PREVIEW_BOOK_PATH),
-    fullBookPresent: fs.existsSync(FULL_BOOK_PATH)
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, HOST, () => {
+    ensureFullBook();
+    safeLog('info', 'server_started', {
+      port: PORT,
+      production: IS_PRODUCTION,
+      previewReady: fs.existsSync(PREVIEW_BOOK_PATH),
+      fullBookPresent: fs.existsSync(FULL_BOOK_PATH)
+    });
   });
-});
+}

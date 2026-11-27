@@ -1,4 +1,4 @@
-const CACHE_NAME = 'quietpages-v3';
+const CACHE_NAME = 'quietpages-v4';
 const APP_SHELL = ['/', '/read', '/manifest.webmanifest', '/manus-routes.json'];
 
 self.addEventListener('install', (event) => {
