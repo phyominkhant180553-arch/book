@@ -133,6 +133,23 @@
     .visual-card img { width:100%; height:100%; object-fit:cover; display:block; filter:saturate(.9) contrast(1.04); transition:transform .8s cubic-bezier(.2,.8,.2,1), filter .8s; }
     .visual-card:hover img { transform:scale(1.07); filter:saturate(1.15) contrast(1.06); }
     .visual-card figcaption { position:absolute; left:18px; right:18px; bottom:16px; color:#fff; font-size:.7rem; letter-spacing:.08em; text-shadow:0 2px 14px #000; }
+    .visual-cinema { position:relative; margin-top:28px; }
+    .visual-cinema::before { content:""; position:absolute; inset:10% 18%; border-radius:50%; background:radial-gradient(circle,rgba(199,137,98,.18),transparent 68%); filter:blur(30px); pointer-events:none; }
+    .visual-progress { position:absolute; z-index:5; right:22px; bottom:22px; display:flex; align-items:center; gap:10px; color:rgba(246,240,231,.62); font-size:.65rem; letter-spacing:.14em; }
+    .visual-progress-track { width:92px; height:2px; overflow:hidden; background:rgba(246,240,231,.22); }
+    .visual-progress i { display:block; width:20%; height:100%; background:var(--copper-soft); transform-origin:left; }
+    @media (min-width:801px) {
+      .visual-cinema { min-height:clamp(520px,72vh,760px); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+      .visual-grid { position:relative; width:min(78vw,980px); height:min(66vh,650px); display:block; perspective:1400px; }
+      .visual-card { position:absolute; inset:0; width:100%; height:100%; min-height:0; border-color:rgba(246,240,231,.25); box-shadow:0 34px 90px rgba(0,0,0,.42); transform-origin:center center; will-change:transform,opacity,filter; }
+      .visual-card:first-child, .visual-card:last-child { grid-row:auto; grid-column:auto; }
+      .visual-card:nth-child(2) { clip-path:polygon(8% 3%,96% 0,100% 90%,4% 100%); }
+      .visual-card:nth-child(3) { clip-path:polygon(0 4%,94% 0,100% 96%,5% 100%); }
+      .visual-card:nth-child(4) { clip-path:polygon(4% 0,100% 5%,95% 100%,0 94%); }
+      .visual-card:nth-child(5) { clip-path:polygon(0 0,96% 6%,100% 94%,5% 100%); }
+      .visual-card img { transition:none; }
+      .visual-card figcaption { font-size:.78rem; }
+    }
     .hero-copy > *, .hero-art, .purchase-card { will-change:transform, opacity; }
 
     .reader { position:fixed; inset:0; z-index:30; overflow:hidden; min-height:100svh; background:var(--bg-gradient); transition:background 1.2s ease; }
@@ -269,12 +286,15 @@
 
         <section id="visuals" class="visual-atlas" aria-labelledby="visuals-title">
           <div class="visual-atlas-heading"><div><div class="eyebrow">စာအုပ်ထဲက ကမ္ဘာများ</div><h2 id="visuals-title">အပြင်ဘက် စကြဝဠာမှ<br><em>အတွင်းဘက် စကြဝဠာအထိ</em></h2></div><p>စာအုပ်ထဲက အမှန်တကယ်ပါဝင်တဲ့ ပုံရိပ်များဖြင့် ခရီးစဉ်ရဲ့ အဆင့်ဆင့်ကို မြင်တွေ့ပါ။</p></div>
-          <div class="visual-grid">
-            <figure class="visual-card"><img src="/images/book/cosmos.jpg" alt="စကြဝဠာနှင့် ကြယ်များ" loading="lazy" /><figcaption>စကြဝဠာ၏ အစ</figcaption></figure>
-            <figure class="visual-card"><img src="/images/book/earth.jpg" alt="ကမ္ဘာမြေ" loading="lazy" /><figcaption>မတော်တဆ ဇာတ်လိုက်</figcaption></figure>
-            <figure class="visual-card"><img src="/images/book/life.jpg" alt="သက်ရှိနှင့် ကမ္ဘာမြေ" loading="lazy" /><figcaption>သက်ရှိ၏ မီးပွား</figcaption></figure>
-            <figure class="visual-card"><img src="/images/book/human-origins.jpg" alt="လူသားတို့၏ မူလအစ" loading="lazy" /><figcaption>လူသားတို့၏ ခရီး</figcaption></figure>
-            <figure class="visual-card"><img src="/images/book/brain.jpg" alt="ဦးနှောက်နှင့် အသိစိတ်" loading="lazy" /><figcaption>အတွင်းဘက် စကြဝဠာ</figcaption></figure>
+          <div class="visual-cinema" aria-label="စာအုပ်ထဲက ပုံရိပ်များ၏ scroll ခရီးစဉ်">
+            <div class="visual-grid">
+              <figure class="visual-card"><img src="/images/book/cosmos.jpg" alt="စကြဝဠာနှင့် ကြယ်များ" loading="lazy" /><figcaption>စကြဝဠာ၏ အစ</figcaption></figure>
+              <figure class="visual-card"><img src="/images/book/earth.jpg" alt="ကမ္ဘာမြေ" loading="lazy" /><figcaption>မတော်တဆ ဇာတ်လိုက်</figcaption></figure>
+              <figure class="visual-card"><img src="/images/book/life.jpg" alt="သက်ရှိနှင့် ကမ္ဘာမြေ" loading="lazy" /><figcaption>သက်ရှိ၏ မီးပွား</figcaption></figure>
+              <figure class="visual-card"><img src="/images/book/human-origins.jpg" alt="လူသားတို့၏ မူလအစ" loading="lazy" /><figcaption>လူသားတို့၏ ခရီး</figcaption></figure>
+              <figure class="visual-card"><img src="/images/book/brain.jpg" alt="ဦးနှောက်နှင့် အသိစိတ်" loading="lazy" /><figcaption>အတွင်းဘက် စကြဝဠာ</figcaption></figure>
+            </div>
+            <div class="visual-progress" aria-hidden="true"><span>၀၁ — ၀၅</span><div class="visual-progress-track"><i></i></div></div>
           </div>
         </section>
 
@@ -636,7 +656,28 @@
         gsap.to('.motion-rail-track', { xPercent: -22, ease: 'none', scrollTrigger: { trigger: '.motion-rail', start: 'top bottom', end: 'bottom top', scrub: 1 } });
         gsap.from('.purchase-card', { y: 70, autoAlpha: 0, scale: .97, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.purchase', start: 'top 78%' } });
         gsap.from('.story-section > *', { y: 60, autoAlpha: 0, duration: 1, stagger: .16, ease: 'power3.out', scrollTrigger: { trigger: '.story-section', start: 'top 78%' } });
-        gsap.from('.visual-card', { y: 55, rotation: (index) => index % 2 ? 2 : -2, autoAlpha: 0, duration: .85, stagger: .12, ease: 'back.out(1.2)', scrollTrigger: { trigger: '.visual-atlas', start: 'top 75%' } });
+        const visualCinema = document.querySelector('.visual-cinema');
+        const visualCards = Array.from(document.querySelectorAll('.visual-card'));
+        const visualProgress = document.querySelector('.visual-progress i');
+        const visualCounter = document.querySelector('.visual-progress span');
+        if (desktop && visualCinema && visualCards.length) {
+          const burmeseDigits = '၀၁၂၃၄၅၆၇၈၉';
+          const digit = (value) => String(value).split('').map((number) => burmeseDigits[number] || number).join('');
+          gsap.set(visualCards, { autoAlpha: 0, scale: .78, x: 0, y: 36, rotation: 0, filter: 'brightness(.45) saturate(.7)' });
+          gsap.set(visualCards[0], { autoAlpha: 1, scale: .92, y: 0, zIndex: 5, filter: 'brightness(1) saturate(1)' });
+          const visualTimeline = gsap.timeline({ scrollTrigger: { trigger: visualCinema, start: 'top top', end: () => `+=${Math.max(2400, visualCards.length * 720)}`, pin: visualCinema, scrub: 1.15, anticipatePin: 1, invalidateOnRefresh: true, onUpdate: (self) => { const index = Math.min(visualCards.length, Math.max(1, Math.ceil(self.progress * visualCards.length))); if (visualProgress) gsap.set(visualProgress, { scaleX: Math.max(.18, self.progress) }); if (visualCounter) visualCounter.textContent = `${digit(index).padStart(2, '၀')} — ${digit(visualCards.length).padStart(2, '၀')}`; } } });
+          visualCards.forEach((card, index) => {
+            const image = card.querySelector('img');
+            const driftX = index % 2 ? -5 : 5;
+            const driftY = index % 3 ? -3 : 3;
+            if (index > 0) visualTimeline.to(card, { autoAlpha: 1, scale: 1, x: 0, y: 0, rotation: index % 2 ? 2 : -2, zIndex: 5, filter: 'brightness(1) saturate(1)', duration: 1.05, ease: 'power2.out' }, `>${index === 1 ? 0 : .14}`);
+            visualTimeline.to(image, { scale: 1.16, xPercent: driftX, yPercent: driftY, duration: 1.55, ease: 'none' }, '<');
+            visualTimeline.to(card, { scale: 1.08, rotation: index % 2 ? -1.5 : 1.5, filter: 'brightness(.82) saturate(1.28)', duration: 1.1, ease: 'none' });
+            if (index < visualCards.length - 1) visualTimeline.to(card, { autoAlpha: 0, scale: .72, x: index % 2 ? 110 : -110, y: -26, rotation: index % 2 ? 8 : -8, filter: 'brightness(.4) saturate(.55)', duration: .85, ease: 'power2.in' });
+          });
+        } else {
+          gsap.from('.visual-card', { y: 55, rotation: (index) => index % 2 ? 2 : -2, autoAlpha: 0, duration: .85, stagger: .12, ease: 'back.out(1.2)', scrollTrigger: { trigger: '.visual-atlas', start: 'top 75%' } });
+        }
         const poetrySection = document.querySelector('.poetry-section');
         const poetryPin = document.querySelector('.poetry-pin');
         const poetryTrack = document.querySelector('.poetry-track');
