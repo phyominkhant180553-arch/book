@@ -295,6 +295,35 @@
     .paywall-card .primary-cta { margin-top:27px; }
     .paywall-dismiss { margin-top:15px; cursor:pointer; background:transparent; color:var(--muted); font-size:.68rem; }
     .paywall-dismiss:hover { color:var(--paper); }
+    .checkout { position:fixed; inset:0; z-index:65; display:grid; place-items:center; padding:22px; overflow:auto; background:rgba(5,7,12,.78); backdrop-filter:blur(18px); }
+    .checkout[hidden] { display:none; }
+    .checkout-card { position:relative; display:grid; grid-template-columns:minmax(220px,.72fr) minmax(320px,1.28fr); width:min(920px,100%); max-height:min(760px,calc(100dvh - 44px)); overflow:auto; border:1px solid rgba(199,137,98,.56); background:linear-gradient(130deg,#171923,#2c2528 70%,#171923); box-shadow:0 34px 100px rgba(0,0,0,.58); }
+    .checkout-visual { position:relative; display:grid; place-items:center; min-height:420px; overflow:hidden; background:radial-gradient(circle at 50% 35%,rgba(199,137,98,.26),transparent 48%),#11131c; perspective:1000px; }
+    .checkout-visual::before { content:""; position:absolute; inset:15%; border:1px solid rgba(227,176,141,.22); border-radius:50%; transform:rotate(-18deg) scaleY(.4); box-shadow:0 0 50px rgba(199,137,98,.16),0 0 0 30px rgba(199,137,98,.04); }
+    .checkout-cover { position:relative; z-index:1; width:min(58%,230px); transform:rotateY(-14deg) rotateZ(-4deg); transform-style:preserve-3d; filter:drop-shadow(22px 30px 18px rgba(0,0,0,.5)); transition:transform .6s cubic-bezier(.2,.8,.2,1); }
+    .checkout-card:hover .checkout-cover { transform:rotateY(10deg) rotateZ(-2deg) translateY(-7px); }
+    .checkout-cover img { display:block; width:100%; aspect-ratio:1; object-fit:cover; border:1px solid rgba(227,176,141,.7); }
+    .checkout-cover::after { content:""; position:absolute; inset:8px -10px 8px 10px; z-index:-1; border:1px solid rgba(246,240,231,.3); background:repeating-linear-gradient(90deg,#d8c8b4 0 2px,#f6f0e7 2px 4px); transform:translateZ(-18px); }
+    .checkout-visual-copy { position:absolute; left:24px; right:24px; bottom:24px; z-index:2; color:rgba(246,240,231,.66); font-size:.68rem; line-height:1.7; text-align:center; }
+    .checkout-content { position:relative; padding:clamp(26px,5vw,54px); }
+    .checkout-close { position:absolute; top:16px; right:16px; }
+    .checkout-content h2 { margin:12px 40px 10px 0; font:400 clamp(2rem,4vw,3.6rem)/.95 var(--serif); }
+    .checkout-description { max-width:500px; margin:0 0 24px; color:#c7beb4; font-size:.8rem; line-height:1.8; }
+    .checkout-price { display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:14px 0; border-top:1px solid rgba(246,240,231,.14); border-bottom:1px solid rgba(246,240,231,.14); }
+    .checkout-price span { color:var(--muted); font-size:.72rem; }
+    .checkout-price strong { color:var(--copper-soft); font-size:1.15rem; font-weight:600; }
+    .payment-methods { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin:20px 0 12px; }
+    .payment-method { display:grid; justify-items:center; gap:7px; min-height:108px; padding:11px 7px; cursor:pointer; border:1px solid rgba(246,240,231,.16); border-radius:12px; background:rgba(246,240,231,.045); color:var(--muted); transition:transform .2s,border .2s,background .2s,color .2s; }
+    .payment-method:hover, .payment-method.selected { border-color:rgba(227,176,141,.78); background:rgba(199,137,98,.13); color:var(--paper); transform:translateY(-2px); }
+    .payment-method img { width:48px; height:48px; object-fit:cover; border-radius:10px; }
+    .payment-method strong { font-size:.7rem; font-weight:600; }
+    .network-picker { display:flex; gap:8px; margin:12px 0 14px; }
+    .network-picker[hidden] { display:none; }
+    .network-option { flex:1; padding:9px 8px; cursor:pointer; border:1px solid rgba(246,240,231,.15); border-radius:8px; background:rgba(246,240,231,.04); color:var(--muted); font-size:.68rem; }
+    .network-option.selected { border-color:var(--copper-soft); color:var(--paper); background:rgba(199,137,98,.14); }
+    .checkout-status { min-height:38px; margin:0 0 15px; color:var(--muted); font-size:.7rem; line-height:1.65; }
+    .checkout-submit { width:100%; justify-content:center; }
+    .checkout-note { margin:13px 0 0; color:rgba(246,240,231,.42); font-size:.63rem; line-height:1.6; text-align:center; }
     .privacy-shield { position:fixed; inset:0; z-index:70; display:grid; place-items:center; background:var(--ink); color:var(--paper); opacity:0; pointer-events:none; transition:opacity .15s; }
     .privacy-shield.visible { opacity:1; pointer-events:auto; }
     .privacy-shield div { text-align:center; }
@@ -367,6 +396,14 @@
       .post-world-copy { width:calc(100% - 36px); margin:0 18px 48px; }
       .post-world-copy h2 { font-size:clamp(3.2rem,15vw,5.6rem); }
       .post-world-glow { right:2%; top:20%; width:120px; height:120px; opacity:.34; }
+      .checkout { padding:12px; place-items:start center; }
+      .checkout-card { display:block; max-height:calc(100dvh - 24px); }
+      .checkout-visual { min-height:205px; }
+      .checkout-cover { width:118px; }
+      .checkout-visual-copy { bottom:12px; font-size:.6rem; }
+      .checkout-content { padding:26px 18px 22px; }
+      .checkout-content h2 { font-size:2rem; }
+      .payment-method { min-height:100px; }
       .reader, .reader-main, .reader-canvas { min-height:100dvh; height:100dvh; }
       .book-stage { padding:92px 8px 82px; }
       .reader-actions { gap:4px; }
@@ -521,6 +558,34 @@
   <div id="paywall" class="paywall" hidden role="dialog" aria-modal="true" aria-labelledby="paywall-title">
     <div class="paywall-card"><div class="paywall-glyph">⌁</div><div class="eyebrow">ခဏနားပါ</div><h2 id="paywall-title">အခမဲ့ဖတ်ရှုနိုင်တဲ့ စာမျက်နှာတွေ ဒီမှာ ပြီးဆုံးပါပြီ။</h2><p>စာမျက်နှာ ၆၆ အထိ ဖတ်ရှုပြီးပါပြီ။ ဒီခရီးစဉ်က သင့်အတွက် စိတ်ဝင်စားစရာဖြစ်ခဲ့ရင် ကျန်ရှိတဲ့ စာမျက်နှာတွေက ဆက်လက်စောင့်ကြိုနေပါတယ်။</p><a id="paywallCta" class="primary-cta" href="#purchase">စာအုပ်အပြည့်အစုံကို ဆက်ဖတ်မည် <span class="arrow" aria-hidden="true">→</span></a><button class="paywall-dismiss" type="button" data-dismiss-paywall>စာမျက်နှာ ၆၆ သို့ ပြန်သွားမည်</button></div>
   </div>
+  <div id="checkout" class="checkout" hidden role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+    <div class="checkout-card">
+      <button class="icon-button checkout-close" type="button" data-close-checkout aria-label="ဝယ်ယူမှု ပိတ်ရန်">×</button>
+      <div class="checkout-visual">
+        <div class="checkout-cover"><img src="/images/book/cover.png" alt="စကြဝဠာမှ အသိစိတ်အထိ စာအုပ်အဖုံး" /></div>
+        <div class="checkout-visual-copy">စကြဝဠာမှ အသိစိတ်အထိ<br>Paing ရေးသားသော စာအုပ်</div>
+      </div>
+      <div class="checkout-content">
+        <div class="eyebrow">စာအုပ်အပြည့်အစုံ ဝယ်ယူရန်</div>
+        <h2 id="checkout-title">ခရီးစဉ်ကို ဆက်လက်ဖတ်ရှုပါ</h2>
+        <p class="checkout-description">မဟာပေါက်ကွဲမှုမှ စတင်ပြီး သက်ရှိဘဝ၊ လူသားတို့၏ မူလအစနှင့် အတွင်းဘက် အသိစိတ်အထိ ဆက်လက်စူးစမ်းနိုင်မည့် စာအုပ်အပြည့်အစုံ။</p>
+        <div class="checkout-price"><span>ပေးချေရမည့်ငွေ</span><strong>၂၀,၀၀၀ ကျပ်</strong></div>
+        <div class="eyebrow" style="margin-top:20px">ငွေပေးချေမှုနည်းလမ်း</div>
+        <div class="payment-methods" role="radiogroup" aria-label="ငွေပေးချေမှုနည်းလမ်းရွေးချယ်ရန်">
+          <button class="payment-method selected" type="button" data-payment-method="sdb" aria-pressed="true"><img src="/images/book/payments/sdb.png" alt="SDB" /><strong>SDB</strong></button>
+          <button class="payment-method" type="button" data-payment-method="kbz" aria-pressed="false"><img src="/images/book/payments/kbz-pay.png" alt="KBZ Pay" /><strong>KBZ Pay</strong></button>
+          <button class="payment-method" type="button" data-payment-method="usdt" aria-pressed="false"><img src="/images/book/payments/usdt.png" alt="USDT" /><strong>USDT</strong></button>
+        </div>
+        <div id="networkPicker" class="network-picker" hidden aria-label="USDT network ရွေးချယ်ရန်">
+          <button class="network-option selected" type="button" data-network="erc20" aria-pressed="true">USDT · ERC20</button>
+          <button class="network-option" type="button" data-network="bep20" aria-pressed="false">USDT · BEP20</button>
+        </div>
+        <p id="checkoutStatus" class="checkout-status">SDB ငွေပေးချေမှုအချက်အလက်များကို အတည်ပြုပြီးနောက် ဤနေရာတွင် ပြသပေးပါမည်။</p>
+        <button id="checkoutSubmit" class="primary-cta checkout-submit" type="button">ဆက်လက်လုပ်ဆောင်မည် <span class="arrow" aria-hidden="true">→</span></button>
+        <p class="checkout-note">ငွေပေးချေမှုအကောင့်နှင့် wallet လိပ်စာများကို အတည်ပြုပြီးနောက်သာ ထည့်သွင်းပေးမည်ဖြစ်ပါသည်။</p>
+      </div>
+    </div>
+  </div>
   <div id="privacyShield" class="privacy-shield" aria-hidden="true"><div><strong>စာဖတ်ရှုမှုကို ခဏရပ်ထားပါသည်။</strong><span>ဆက်လက်ဖတ်ရှုရန် ဤစာမျက်နှာသို့ ပြန်လာပါ။</span></div></div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
@@ -530,6 +595,7 @@
     const landing = document.getElementById('landing');
     const reader = document.getElementById('reader');
     const paywall = document.getElementById('paywall');
+    const checkout = document.getElementById('checkout');
     const privacyShield = document.getElementById('privacyShield');
     const particleCanvas = document.getElementById('particleCanvas');
     const particleContext = particleCanvas?.getContext('2d');
@@ -550,6 +616,47 @@
       toast.classList.add('visible');
       window.clearTimeout(showToast.timer);
       showToast.timer = window.setTimeout(() => toast.classList.remove('visible'), 2600);
+    }
+
+    const paymentCopy = {
+      sdb: 'SDB ငွေပေးချေမှုအချက်အလက်များကို အတည်ပြုပြီးနောက် ဤနေရာတွင် ပြသပေးပါမည်။',
+      kbz: 'KBZ Pay အကောင့်အချက်အလက်များကို အတည်ပြုပြီးနောက် ဤနေရာတွင် ပြသပေးပါမည်။',
+      usdt: 'USDT wallet လိပ်စာကို network မှန်ကန်စွာ ရွေးချယ်ပြီးနောက် အတည်ပြုပေးပါမည်။'
+    };
+    let selectedPayment = 'sdb';
+    let selectedNetwork = 'erc20';
+
+    function openCheckout() {
+      checkout.hidden = false;
+      document.body.classList.add('checkout-open');
+      window.setTimeout(() => document.querySelector('[data-payment-method].selected')?.focus(), 40);
+    }
+
+    function closeCheckout() {
+      checkout.hidden = true;
+      document.body.classList.remove('checkout-open');
+    }
+
+    function selectPayment(method) {
+      selectedPayment = method;
+      $$('.payment-method').forEach((button) => {
+        const active = button.dataset.paymentMethod === method;
+        button.classList.toggle('selected', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      const networkPicker = $('#networkPicker');
+      networkPicker.hidden = method !== 'usdt';
+      $('#checkoutStatus').textContent = method === 'usdt' ? `${paymentCopy.usdt} လက်ရှိရွေးချယ်ထားသည်: ${selectedNetwork.toUpperCase()}` : paymentCopy[method];
+    }
+
+    function selectNetwork(network) {
+      selectedNetwork = network;
+      $$('.network-option').forEach((button) => {
+        const active = button.dataset.network === network;
+        button.classList.toggle('selected', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      if (selectedPayment === 'usdt') $('#checkoutStatus').textContent = `${paymentCopy.usdt} လက်ရှိရွေးချယ်ထားသည်: ${network.toUpperCase()}`;
     }
 
     function resizeParticles() {
@@ -617,6 +724,7 @@
       stopAmbientAudio();
       document.querySelector('.equalizer')?.classList.remove('visible');
       paywall.hidden = true;
+      closeCheckout();
       safeRoute('/');
       if (scrollTarget) window.setTimeout(() => document.querySelector(scrollTarget)?.scrollIntoView({ behavior: 'smooth' }), 40);
     }
@@ -641,7 +749,7 @@
       $('#bookDek').textContent = info.dek;
       $('#bookAuthor').textContent = info.author;
       $('#readerTitle').textContent = info.title;
-      $('#purchasePrice').textContent = info.price;
+      $('#purchasePrice').textContent = '၂၀,၀၀၀ ကျပ်';
       const purchaseLink = $('#purchaseLink');
       const paywallCta = $('#paywallCta');
       purchaseLink.href = info.purchaseUrl || '#purchase';
@@ -780,8 +888,14 @@
     $('[data-dismiss-paywall]').addEventListener('click', closePaywall);
     $$('.mood-button').forEach((button) => button.addEventListener('click', () => setMood(button.dataset.mood)));
     $('#pageSlider').addEventListener('input', (event) => jumpToPage(Number(event.target.value)));
-    $('#purchaseLink').addEventListener('click', (event) => { if (event.currentTarget.getAttribute('href') === '#purchase') { event.preventDefault(); showToast('ဝယ်ယူရန် လင့်ခ်ကို မကြာမီ ချိတ်ဆက်ပေးပါမည်။'); } });
-    $('#paywallCta').addEventListener('click', (event) => { if (event.currentTarget.getAttribute('href') === '#purchase') { event.preventDefault(); paywall.hidden = true; showLanding('#purchase'); showToast('စာအုပ်အပြည့်အစုံ ဝယ်ယူရန်နေရာကို ပြင်ဆင်ထားပါသည်။'); } });
+    $('#purchaseLink').addEventListener('click', (event) => { event.preventDefault(); openCheckout(); });
+    $('#paywallCta').addEventListener('click', (event) => { event.preventDefault(); paywall.hidden = true; showLanding('#purchase'); window.setTimeout(openCheckout, 180); });
+    $('[data-close-checkout]').addEventListener('click', closeCheckout);
+    checkout.addEventListener('click', (event) => { if (event.target === checkout) closeCheckout(); });
+    $$('.payment-method').forEach((button) => button.addEventListener('click', () => selectPayment(button.dataset.paymentMethod)));
+    $$('.network-option').forEach((button) => button.addEventListener('click', () => selectNetwork(button.dataset.network)));
+    $('#checkoutSubmit').addEventListener('click', () => { showToast('ငွေပေးချေမှုအချက်အလက်များကို မကြာမီ ထည့်သွင်းပေးပါမည်။'); });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !checkout.hidden) closeCheckout(); });
 
     let touchStart = null;
     let pinchStart = null;
